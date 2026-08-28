@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 
-export const Navbar = ({ activeItem = 'Home', onNavigate }) => {
+export const Navbar = ({ activeItem = 'Home', onNavigate, onGetStarted }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [currentActive, setCurrentActive] = useState(activeItem);
 
@@ -22,10 +22,18 @@ export const Navbar = ({ activeItem = 'Home', onNavigate }) => {
     }
   };
 
+  const handleGetStarted = () => {
+    if (onGetStarted) {
+      onGetStarted();
+    } else {
+      window.location.href = '/login';
+    }
+  };
+
   return (
     <header className="mf-navbar-wrapper">
       <div className="mf-navbar-container">
-        {/* LEFT: MediFlow AI Brand Logo (No extra sub-taglines) */}
+        {/* LEFT: MediFlow AI Brand Logo */}
         <a href="#" className="mf-brand-group" aria-label="MediFlow AI Home">
           <div className="mf-logo-badge">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +48,7 @@ export const Navbar = ({ activeItem = 'Home', onNavigate }) => {
           </div>
         </a>
 
-        {/* CENTER: Flat Clean Navigation Bar (No semi-circle containers) */}
+        {/* CENTER: Flat Clean Navigation Bar */}
         <nav aria-label="Main Navigation">
           <ul className="mf-nav-flat-menu">
             {navItems.map((item) => {
@@ -60,9 +68,9 @@ export const Navbar = ({ activeItem = 'Home', onNavigate }) => {
           </ul>
         </nav>
 
-        {/* RIGHT: Single Get Started CTA (No 24/7 Red Badge) */}
+        {/* RIGHT: Single Get Started CTA */}
         <div className="mf-right-actions">
-          <button className="mf-primary-cta" onClick={() => (window.location.href = '/login')}>
+          <button className="mf-primary-cta" onClick={handleGetStarted}>
             <span>Get Started</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="5" y1="12" x2="19" y2="12" />
