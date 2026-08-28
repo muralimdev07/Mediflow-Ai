@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { useAuthStore } from '../../store/authStore';
 import { useUiStore } from '../../store/uiStore';
-import { HeartPulse, LogIn } from 'lucide-react';
 import { useGoogleLogin } from '@react-oauth/google';
 import './LoginPage.css';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('patient@mediflow.ai');
+  const [password, setPassword] = useState('••••••••');
+  const [activeTab, setActiveTab] = useState('login'); // 'login' | 'signup'
   const [loading, setLoading] = useState(false);
   const { setAuth } = useAuthStore();
   const { addToast } = useUiStore();
@@ -53,37 +54,88 @@ export const LoginPage = () => {
   });
 
   return (
-    <div className="mf-orig-login-wrapper">
-      {/* Glow Backgrounds */}
-      <div className="mf-glow-primary" />
-      <div className="mf-glow-secondary" />
-
-      <div className="mf-login-container">
-        {/* Header Icon & Title */}
-        <div className="mf-header-box">
-          <div className="mf-heart-icon-badge">
-            <HeartPulse className="w-12 h-12" />
+    <div className="mf-split-wrapper">
+      <div className="mf-split-card">
+        {/* LEFT COLUMN: Problem Statement Medical AI Hero Image */}
+        <div className="mf-split-left">
+          <img
+            src="/mediflow_login_hero.jpg"
+            alt="MediFlow AI Smart Hospital Queue Management"
+            className="mf-split-left-img"
+          />
+          <div className="mf-split-left-overlay">
+            <span className="mf-left-badge">MediFlow AI Platform</span>
+            <h2 className="mf-left-title">Smart Hospital Queue & Patient Flow</h2>
+            <p className="mf-left-sub">
+              Automated AI triage routing, real-time token tracking, and instant digital check-ins for modern hospitals.
+            </p>
           </div>
-          <h1 className="mf-app-title">MediFlow AI</h1>
-          <p className="mf-app-sub">Smart Hospital Queue & AI Triage Platform</p>
         </div>
 
-        {/* Main Card */}
-        <div className="mf-card-container">
-          <div className="mf-card-header">
-            <h2 className="mf-card-title">Sign In</h2>
-            <p className="mf-card-subtitle">Select a role or sign in with Google</p>
+        {/* RIGHT COLUMN: Matching Reference UI Form */}
+        <div className="mf-split-right">
+          <h1 className="mf-right-greeting">
+            Hello, <span>Guys!</span>
+          </h1>
+
+          {/* Login / SignUp Tab Bar */}
+          <div className="mf-auth-tabs">
+            <div
+              className={`mf-tab-item ${activeTab === 'login' ? 'active' : ''}`}
+              onClick={() => setActiveTab('login')}
+            >
+              Login
+            </div>
+            <div
+              className={`mf-tab-item ${activeTab === 'signup' ? 'active' : ''}`}
+              onClick={() => setActiveTab('signup')}
+            >
+              SignUp
+            </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {/* Standard Professional Google Sign In Button */}
-            <button className="mf-btn-google-orig" onClick={() => googleLogin()} disabled={loading}>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                style={{ width: '20px', height: '20px', minWidth: '20px', minHeight: '20px' }}
-              >
+          {/* Form Fields (Underline Minimal Style matching reference) */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleDevLogin(email);
+            }}
+          >
+            <div className="mf-field-container">
+              <input
+                type="email"
+                className="mf-field-input"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mf-field-container">
+              <input
+                type="password"
+                className="mf-field-input"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Primary Action Button */}
+            <button type="submit" className="mf-btn-login-main" disabled={loading}>
+              {loading ? 'Signing In...' : 'Login'}
+            </button>
+          </form>
+
+          {/* Or Divider */}
+          <div className="mf-or-divider">Or</div>
+
+          {/* Continue with Google Only (NO Facebook!) */}
+          <div className="mf-google-wrapper">
+            <button className="mf-btn-continue-google" onClick={() => googleLogin()} disabled={loading}>
+              <svg width="20" height="20" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -103,47 +155,39 @@ export const LoginPage = () => {
               </svg>
               <span>Continue with Google</span>
             </button>
+          </div>
 
-            {/* Divider 1 */}
-            <div className="mf-orig-divider">
-              <span>Or use Dev Login</span>
-            </div>
-
-            {/* Dev Email Input */}
-            <div className="mf-input-wrapper">
-              <label className="mf-input-lbl">Development Email Login</label>
-              <input
-                className="mf-input-inp"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. dr.sharma@mediflow.ai"
-              />
-            </div>
-
-            <button className="mf-btn-email-orig" onClick={() => handleDevLogin(email)} disabled={loading}>
-              <LogIn className="w-4 h-4" />
-              <span>Sign In with Email (Dev Mode)</span>
-            </button>
-
-            {/* Divider 2 */}
-            <div className="mf-orig-divider" style={{ marginTop: '20px' }}>
-              <span>Quick Demo Login</span>
-            </div>
-
-            {/* Quick Demo Buttons */}
-            <div className="mf-demo-role-grid">
-              <button className="mf-demo-role-btn" onClick={() => handleDevLogin('patient@mediflow.ai')}>
-                Patient Demo
+          {/* Quick Demo Roles Strip */}
+          <div className="mf-quick-demo-strip">
+            <div className="mf-demo-title">Quick Demo Logins</div>
+            <div className="mf-demo-pills">
+              <button
+                type="button"
+                className="mf-demo-pill-btn"
+                onClick={() => handleDevLogin('patient@mediflow.ai')}
+              >
+                Patient
               </button>
-              <button className="mf-demo-role-btn" onClick={() => handleDevLogin('nurse.mary@mediflow.ai')}>
-                Nurse Demo
+              <button
+                type="button"
+                className="mf-demo-pill-btn"
+                onClick={() => handleDevLogin('nurse.mary@mediflow.ai')}
+              >
+                Nurse
               </button>
-              <button className="mf-demo-role-btn" onClick={() => handleDevLogin('dr.sharma@mediflow.ai')}>
-                Doctor Demo
+              <button
+                type="button"
+                className="mf-demo-pill-btn"
+                onClick={() => handleDevLogin('dr.sharma@mediflow.ai')}
+              >
+                Doctor
               </button>
-              <button className="mf-demo-role-btn" onClick={() => handleDevLogin('admin@mediflow.ai')}>
-                Admin Demo
+              <button
+                type="button"
+                className="mf-demo-pill-btn"
+                onClick={() => handleDevLogin('admin@mediflow.ai')}
+              >
+                Admin
               </button>
             </div>
           </div>

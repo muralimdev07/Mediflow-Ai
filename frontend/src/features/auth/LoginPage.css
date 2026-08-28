@@ -1,262 +1,294 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
 
-/* ── MediFlow Original Dark Slate Google Authentication Styling ── */
-.mf-orig-login-wrapper {
+/* ── MediFlow Split-Screen Medical Authentication Design System ── */
+.mf-split-wrapper {
   min-height: 100vh;
   width: 100%;
-  background-color: #0F172A;
-  color: #F8FAFC;
+  background: #F1F5F9;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  font-family: 'Inter', sans-serif;
-  position: relative;
-  overflow: hidden;
+  padding: 32px 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   box-sizing: border-box;
 }
 
-/* Background Glow Effects */
-.mf-glow-primary {
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  width: 384px;
-  height: 384px;
-  background: rgba(15, 118, 110, 0.25);
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-.mf-glow-secondary {
-  position: absolute;
-  bottom: 20%;
-  right: 20%;
-  width: 384px;
-  height: 384px;
-  background: rgba(99, 102, 241, 0.18);
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-.mf-login-container {
+.mf-split-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 960px;
+  min-height: 600px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  overflow: hidden;
   position: relative;
-  z-index: 10;
+  border: 1px solid #E2E8F0;
 }
 
-/* Header Section */
-.mf-header-box {
+/* LEFT COLUMN: Problem Statement Medical AI Graphic */
+.mf-split-left {
+  width: 45%;
+  position: relative;
+  background-color: #0F172A;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 32px;
+  justify-content: space-between;
 }
 
-.mf-heart-icon-badge {
-  padding: 16px;
-  border-radius: 16px;
-  background: rgba(15, 118, 110, 0.25);
-  color: #14B8A6;
-  border: 1px solid rgba(20, 184, 166, 0.3);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  margin-bottom: 16px;
+.mf-split-left-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mf-split-left-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 32px;
+  color: #FFFFFF;
+}
+
+.mf-left-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #E2E8F0;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.mf-left-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin: 0 0 6px 0;
+}
+
+.mf-left-sub {
+  font-size: 13px;
+  color: #CBD5E1;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* RIGHT COLUMN: User Reference UI Form */
+.mf-split-right {
+  width: 55%;
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.mf-right-greeting {
+  font-family: 'Outfit', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: #4A6B74;
+  margin: 0 0 24px 0;
+}
+
+.mf-right-greeting span {
+  font-weight: 400;
+  color: #64748B;
+}
+
+/* Tab Headers */
+.mf-auth-tabs {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 32px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid #F1F5F9;
 }
 
-.mf-app-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 32px;
-  font-weight: 900;
-  background: linear-gradient(135deg, #14B8A6 0%, #6366F1 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
-  line-height: 1.1;
-}
-
-.mf-app-sub {
-  font-size: 14px;
+.mf-tab-item {
+  font-size: 18px;
+  font-weight: 700;
   color: #94A3B8;
-  margin-top: 6px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
 }
 
-/* Main Card */
-.mf-card-container {
-  background: #1E293B;
-  border: 1px solid #334155;
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+.mf-tab-item.active {
+  color: #4A6B74;
 }
 
-.mf-card-header {
+.mf-tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #4A6B74;
+  border-radius: 2px;
+}
+
+/* Input Fields (Minimal Underline Style matching reference UI) */
+.mf-field-container {
+  margin-bottom: 24px;
+  position: relative;
+  text-align: left;
+}
+
+.mf-field-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #CBD5E1;
+  padding: 10px 0;
+  font-size: 15px;
+  color: #334155;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.mf-field-input::placeholder {
+  color: #94A3B8;
+}
+
+.mf-field-input:focus {
+  border-bottom-color: #4A6B74;
+}
+
+/* Primary Action Button */
+.mf-btn-login-main {
+  width: 100%;
+  background-color: #4A6B74;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(74, 107, 116, 0.25);
+}
+
+.mf-btn-login-main:hover {
+  background-color: #3A5A63;
+  transform: translateY(-1px);
+}
+
+.mf-btn-login-main:active {
+  transform: translateY(0);
+}
+
+/* Or Divider */
+.mf-or-divider {
+  text-align: center;
+  color: #94A3B8;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 20px 0;
+}
+
+/* Continue with Google Only (No Facebook!) */
+.mf-google-wrapper {
+  display: flex;
+  justify-content: center;
   margin-bottom: 24px;
 }
 
-.mf-card-title {
-  font-size: 22px;
-  font-weight: 800;
-  color: #F8FAFC;
-  margin: 0 0 4px 0;
-}
-
-.mf-card-subtitle {
-  font-size: 13.5px;
-  color: #94A3B8;
-  margin: 0;
-}
-
-/* Form Controls & Standard Sleek Google Button */
-.mf-btn-google-orig {
-  width: 100%;
-  height: 48px;
-  background: #1E293B;
-  color: #F8FAFC;
-  border: 1px solid #475569;
-  border-radius: 12px;
-  padding: 0 20px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+.mf-btn-continue-google {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.mf-btn-google-orig:hover {
-  background: #334155;
-  border-color: #64748B;
-}
-
-.mf-btn-google-orig svg,
-.mf-btn-google-orig img {
-  width: 20px !important;
-  height: 20px !important;
-  max-width: 20px !important;
-  max-height: 20px !important;
-  min-width: 20px !important;
-  min-height: 20px !important;
-  display: block !important;
-  flex-shrink: 0 !important;
-}
-
-/* Divider Line */
-.mf-orig-divider {
-  position: relative;
-  text-align: center;
-  margin: 20px 0;
-}
-
-.mf-orig-divider::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: rgba(71, 85, 105, 0.5);
-}
-
-.mf-orig-divider span {
-  position: relative;
-  background: #1E293B;
-  padding: 0 12px;
-  font-size: 11px;
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 99px;
+  padding: 10px 24px;
+  font-size: 14px;
   font-weight: 700;
+  color: #334155;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.mf-btn-continue-google:hover {
+  background-color: #F8FAFC;
+  border-color: #94A3B8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Quick Demo Roles Strip */
+.mf-quick-demo-strip {
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px dashed #E2E8F0;
+}
+
+.mf-demo-title {
+  font-size: 11px;
+  font-weight: 800;
   color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-}
-
-/* Inputs */
-.mf-input-wrapper {
-  margin-bottom: 16px;
-  text-align: left;
-}
-
-.mf-input-lbl {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #CBD5E1;
-  margin-bottom: 6px;
-}
-
-.mf-input-inp {
-  width: 100%;
-  padding: 11px 16px;
-  background: #0F172A;
-  border: 1px solid #334155;
-  border-radius: 12px;
-  font-size: 14px;
-  color: #F8FAFC;
-  box-sizing: border-box;
-  outline: none;
-  transition: all 0.2s ease;
-}
-
-.mf-input-inp:focus {
-  border-color: #14B8A6;
-  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.3);
-}
-
-.mf-btn-email-orig {
-  width: 100%;
-  height: 48px;
-  background: #0F766E;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 12px;
-  padding: 0 20px;
-  font-size: 14.5px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(15, 118, 110, 0.4);
-  transition: all 0.2s ease;
-}
-
-.mf-btn-email-orig:hover {
-  background: #14B8A6;
-}
-
-/* Quick Demo Role Grid */
-.mf-demo-role-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.mf-demo-role-btn {
-  background: rgba(99, 102, 241, 0.15);
-  color: #A5B4FC;
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 10px;
-  padding: 9px 12px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-.mf-demo-role-btn:hover {
-  background: rgba(99, 102, 241, 0.28);
-  color: #FFFFFF;
-  border-color: #818CF8;
+.mf-demo-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.mf-demo-pill-btn {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mf-demo-pill-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+@media (max-width: 860px) {
+  .mf-split-card {
+    flex-direction: column;
+  }
+  .mf-split-left {
+    width: 100%;
+    height: 240px;
+  }
+  .mf-split-right {
+    width: 100%;
+    padding: 32px 24px;
+  }
 }
