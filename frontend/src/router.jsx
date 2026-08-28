@@ -15,6 +15,7 @@ import { RoomManager } from './features/admin/RoomManager';
 import { InviteStaff } from './features/admin/InviteStaff';
 import { BillingManagement } from './features/admin/BillingManagement';
 import { PaymentPage } from './features/payment/PaymentPage';
+import { AboutPage } from './features/about/AboutPage';
 import { useAuthStore } from './store/authStore';
 import { ROLES } from './utils/constants';
 
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <LandingPage />,
+  },
+  {
+    path: '/about',
+    element: <AboutPage />,
   },
   {
     path: '/navbar',

@@ -17,6 +17,10 @@ export const Navbar = ({ activeItem = 'Home', onNavigate, onGetStarted }) => {
   const handleNavClick = (e, item) => {
     e.preventDefault();
     setCurrentActive(item.label);
+    if (item.label === 'About Us' || item.label === 'About') {
+      window.location.href = '/about';
+      return;
+    }
     if (onNavigate) {
       onNavigate(item.label);
     }

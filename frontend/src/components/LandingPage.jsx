@@ -7,6 +7,15 @@ const LandingPage = ({ onGetStarted }) => {
   const handleNavClick = (e, navItem) => {
     e.preventDefault();
     setActiveNav(navItem);
+    if (navItem === 'About') {
+      window.location.href = '/about';
+      return;
+    }
+    const targetId = navItem.toLowerCase().replace(/\s+/g, '-');
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleLoginClick = () => {
@@ -366,7 +375,122 @@ const LandingPage = ({ onGetStarted }) => {
         </div>
       </section>
 
-      {/* 6. FOOTER */}
+      {/* 6. SERVICES SECTION */}
+      <section id="services" className="mf-ref-services-sec">
+        <div className="mf-ref-services-container">
+          <div className="mf-ref-tag-sm" style={{ margin: '0 auto 12px auto', width: 'fit-content' }}>OUR SERVICES</div>
+          <h2 className="mf-ref-how-h2" style={{ textAlign: 'center' }}>
+            Comprehensive AI Solutions <br /> for Modern Healthcare
+          </h2>
+          <p className="mf-ref-how-p" style={{ textAlign: 'center', maxWidth: '680px', margin: '12px auto 0 auto' }}>
+            Discover how MediFlow AI automates patient flow, enhances clinical productivity, and streamlines hospital operations from check-in to discharge.
+          </p>
+
+          <div className="mf-ref-services-grid">
+            <div className="mf-ref-service-card">
+              <div className="mf-ref-service-icon-box" style={{ background: '#DBEAFE', color: '#2563EB' }}>🩺</div>
+              <h3 className="mf-ref-service-h3">Smart Symptom Triage</h3>
+              <p className="mf-ref-service-p">
+                Automated intake system classifying urgency levels (P1 to P5) using machine learning models to prioritize critical care.
+              </p>
+            </div>
+
+            <div className="mf-ref-service-card">
+              <div className="mf-ref-service-icon-box" style={{ background: '#DCFCE7', color: '#16A34A' }}>⚡</div>
+              <h3 className="mf-ref-service-h3">Live Queue Tracking</h3>
+              <p className="mf-ref-service-p">
+                Real-time digital token tracking and SMS queue alerts so patients can wait comfortably without crowding reception areas.
+              </p>
+            </div>
+
+            <div className="mf-ref-service-card">
+              <div className="mf-ref-service-icon-box" style={{ background: '#F3E8FF', color: '#9333EA' }}>🏥</div>
+              <h3 className="mf-ref-service-h3">Room & Bed Management</h3>
+              <p className="mf-ref-service-p">
+                Dynamic allocation of consultation cabins, OPD rooms, and ICU beds to eliminate operational bottlenecks.
+              </p>
+            </div>
+
+            <div className="mf-ref-service-card">
+              <div className="mf-ref-service-icon-box" style={{ background: '#FEF3C7', color: '#D97706' }}>💳</div>
+              <h3 className="mf-ref-service-h3">Automated Billing & Rx</h3>
+              <p className="mf-ref-service-p">
+                Direct integration between doctors, pharmacy counters, and payment gateways for instant invoice generation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. ABOUT US SECTION */}
+      <section id="about" className="mf-ref-about-sec">
+        <div className="mf-ref-about-container">
+          <div className="mf-ref-about-header">
+            <div className="mf-ref-tag-sm" style={{ margin: '0 auto 12px auto', width: 'fit-content' }}>ABOUT MEDIFLOW AI</div>
+            <h2 className="mf-ref-how-h2" style={{ textAlign: 'center' }}>
+              Revolutionizing Patient Experience <br /> & Hospital Flow
+            </h2>
+            <p className="mf-ref-how-p" style={{ textAlign: 'center', maxWidth: '720px', margin: '12px auto 0 auto' }}>
+              MediFlow AI is an intelligent healthcare operational platform designed to reduce emergency room wait times, streamline doctor consultations, and optimize patient triage using advanced AI algorithms.
+            </p>
+          </div>
+
+          <div className="mf-ref-about-stats-grid">
+            <div className="mf-ref-about-stat-card">
+              <div className="mf-ref-about-stat-num">99.8%</div>
+              <div className="mf-ref-about-stat-label">Triage Accuracy Rate</div>
+            </div>
+            <div className="mf-ref-about-stat-card">
+              <div className="mf-ref-about-stat-num">&lt; 12m</div>
+              <div className="mf-ref-about-stat-label">Avg Hospital Wait Time</div>
+            </div>
+            <div className="mf-ref-about-stat-card">
+              <div className="mf-ref-about-stat-num">500k+</div>
+              <div className="mf-ref-about-stat-label">Patients Streamlined</div>
+            </div>
+            <div className="mf-ref-about-stat-card">
+              <div className="mf-ref-about-stat-num">50+</div>
+              <div className="mf-ref-about-stat-label">Hospitals & Clinics</div>
+            </div>
+          </div>
+
+          <div className="mf-ref-about-grid">
+            <div className="mf-ref-about-card">
+              <div className="mf-ref-about-icon shadow-teal">🎯</div>
+              <h3 className="mf-ref-about-card-title">Our Mission</h3>
+              <p className="mf-ref-about-card-desc">
+                To eliminate chaotic waiting rooms and ensure every patient receives prioritized, high-quality healthcare treatment precisely when they need it most.
+              </p>
+            </div>
+
+            <div className="mf-ref-about-card">
+              <div className="mf-ref-about-icon shadow-blue">🤖</div>
+              <h3 className="mf-ref-about-card-title">Smart AI Triage</h3>
+              <p className="mf-ref-about-card-desc">
+                Our machine learning algorithms evaluate patient symptoms in real time, assigning dynamic urgency levels (P1 to P5) to optimize doctor allocation.
+              </p>
+            </div>
+
+            <div className="mf-ref-about-card">
+              <div className="mf-ref-about-icon shadow-purple">⚡</div>
+              <h3 className="mf-ref-about-card-title">Real-Time Queue Tracking</h3>
+              <p className="mf-ref-about-card-desc">
+                Live digital tokens and SMS notifications allow patients to track their position in queue, reducing anxiety and preventing overcrowded waiting areas.
+              </p>
+            </div>
+
+            <div className="mf-ref-about-card">
+              <div className="mf-ref-about-icon shadow-emerald">🛡️</div>
+              <h3 className="mf-ref-about-card-title">Enterprise Security & Compliance</h3>
+              <p className="mf-ref-about-card-desc">
+                Built with HIPAA-compliant data security, end-to-end encryption, and seamless integration capabilities with existing EHR and hospital management systems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. FOOTER */}
       <footer className="mf-ref-footer">
         <div className="mf-ref-footer-inner">
           <div className="mf-ref-footer-brand">
@@ -378,7 +502,12 @@ const LandingPage = ({ onGetStarted }) => {
 
           <div className="mf-ref-footer-links">
             {['Home', 'How It Works', 'Find Specialist', 'Services', 'About'].map((link) => (
-              <a key={link} href={`#${link.toLowerCase().replace(/\s+/g, '-')}`} className="mf-ref-footer-link">
+              <a
+                key={link}
+                href={`#${link.toLowerCase().replace(/\s+/g, '-')}`}
+                className="mf-ref-footer-link"
+                onClick={(e) => handleNavClick(e, link)}
+              >
                 {link}
               </a>
             ))}
