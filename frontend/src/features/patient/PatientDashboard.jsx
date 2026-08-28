@@ -5,6 +5,7 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { useUiStore } from '../../store/uiStore';
+import { useWebSocket } from '../../hooks/useWebSocket';
 import { Stethoscope, Clock, CheckCircle2, CreditCard, ChevronRight } from 'lucide-react';
 
 export const PatientDashboard = () => {
@@ -32,6 +33,12 @@ export const PatientDashboard = () => {
       setLoading(false);
     }
   };
+
+  useWebSocket([], (event, data) => {
+    if (['queue:update', 'queue:called', 'queue:status_change', 'room:status_change'].includes(event)) {
+      fetchData(); // Refresh the data when any relevant queue event happens
+    }
+  });
 
   return (
     <div className="space-y-6">

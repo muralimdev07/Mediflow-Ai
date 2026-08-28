@@ -94,7 +94,7 @@ def get_my_queue(
 
 
 @router.patch("/{queue_id}/call", response_model=SuccessResponse[QueueEntryRead])
-def call_patient(
+async def call_patient(
     queue_id: str,
     request: QueueCallRequest,
     current_user: User = Depends(require_clinical),
@@ -103,11 +103,13 @@ def call_patient(
     """Call next patient from queue."""
     service = QueueService(db)
     entry = service.call_patient(queue_id, request.room_id)
+    from app.websocket import ws_manager, QueueEvents
+    await ws_manager.broadcast_channel(entry.department_id, QueueEvents.CALLED, {"queue_id": entry.id})
     return {"success": True, "data": entry}
 
 
 @router.patch("/{queue_id}/assign-doctor", response_model=SuccessResponse[QueueEntryRead])
-def assign_doctor(
+async def assign_doctor(
     queue_id: str,
     request: QueueAssignDoctorRequest,
     current_user: User = Depends(require_staff),
@@ -116,11 +118,13 @@ def assign_doctor(
     """Assign a doctor to a queue entry."""
     service = QueueService(db)
     entry = service.assign_doctor(queue_id, request.doctor_id)
+    from app.websocket import ws_manager, QueueEvents
+    await ws_manager.broadcast_channel(entry.department_id, QueueEvents.UPDATE, {"queue_id": entry.id})
     return {"success": True, "data": entry}
 
 
 @router.patch("/{queue_id}/assign-room", response_model=SuccessResponse[QueueEntryRead])
-def assign_room(
+async def assign_room(
     queue_id: str,
     request: QueueAssignRoomRequest,
     current_user: User = Depends(require_staff),
@@ -129,6 +133,8 @@ def assign_room(
     """Assign a room to a queue entry."""
     service = QueueService(db)
     entry = service.assign_room(queue_id, request.room_id)
+    from app.websocket import ws_manager, QueueEvents
+    await ws_manager.broadcast_channel(entry.department_id, QueueEvents.ROOM_STATUS_CHANGE, {"queue_id": entry.id})
     return {"success": True, "data": entry}
 
 
