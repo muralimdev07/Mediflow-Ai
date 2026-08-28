@@ -1,40 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
 
-/* ── MediFlow Split-Screen Medical Authentication Design System ── */
+/* ── MediFlow Compact Professional Split Login System ──────── */
 .mf-split-wrapper {
   min-height: 100vh;
   width: 100%;
-  background: #F1F5F9;
+  background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 24px;
   font-family: 'Plus Jakarta Sans', sans-serif;
   box-sizing: border-box;
 }
 
 .mf-split-card {
   width: 100%;
-  max-width: 960px;
-  min-height: 600px;
+  max-width: 820px;
+  min-height: 480px;
   background: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
   display: flex;
   overflow: hidden;
   position: relative;
   border: 1px solid #E2E8F0;
 }
 
-/* LEFT COLUMN: Problem Statement Medical AI Graphic */
+/* LEFT COLUMN: Hyper-Realistic Hospital Photo */
 .mf-split-left {
-  width: 45%;
+  width: 44%;
   position: relative;
   background-color: #0F172A;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .mf-split-left-img {
@@ -47,49 +44,49 @@
 .mf-split-left-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.15) 0%, rgba(15, 23, 42, 0.75) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 36px 32px;
+  padding: 28px 24px;
   color: #FFFFFF;
 }
 
 .mf-left-badge {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(8px);
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 99px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #E2E8F0;
+  color: #FFFFFF;
   width: fit-content;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .mf-left-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 800;
   line-height: 1.25;
   color: #FFFFFF;
-  margin: 0 0 6px 0;
+  margin: 0 0 4px 0;
 }
 
 .mf-left-sub {
-  font-size: 13px;
-  color: #CBD5E1;
-  line-height: 1.5;
+  font-size: 12px;
+  color: #E2E8F0;
+  line-height: 1.4;
   margin: 0;
 }
 
-/* RIGHT COLUMN: User Reference UI Form */
+/* RIGHT COLUMN: Compact Professional Form */
 .mf-split-right {
-  width: 55%;
-  padding: 48px 44px;
+  width: 56%;
+  padding: 36px 36px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,39 +95,38 @@
 
 .mf-right-greeting {
   font-family: 'Outfit', sans-serif;
-  font-size: 34px;
-  font-weight: 700;
-  color: #4A6B74;
-  margin: 0 0 24px 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #334155;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.4px;
 }
 
 .mf-right-greeting span {
-  font-weight: 400;
-  color: #64748B;
+  color: #0F766E;
 }
 
 /* Tab Headers */
 .mf-auth-tabs {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 32px;
-  margin-bottom: 36px;
+  gap: 28px;
+  margin-bottom: 24px;
   border-bottom: 1px solid #F1F5F9;
 }
 
 .mf-tab-item {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   color: #94A3B8;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease;
 }
 
 .mf-tab-item.active {
-  color: #4A6B74;
+  color: #0F766E;
 }
 
 .mf-tab-item.active::after {
@@ -139,14 +135,14 @@
   bottom: -1px;
   left: 0;
   right: 0;
-  height: 3px;
-  background-color: #4A6B74;
+  height: 2.5px;
+  background-color: #0F766E;
   border-radius: 2px;
 }
 
-/* Input Fields (Minimal Underline Style matching reference UI) */
+/* Input Fields (Clean Minimal Underline Style with Explicit Placeholders) */
 .mf-field-container {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   position: relative;
   text-align: left;
 }
@@ -155,43 +151,46 @@
   width: 100%;
   border: none;
   border-bottom: 2px solid #CBD5E1;
-  padding: 10px 0;
-  font-size: 15px;
-  color: #334155;
+  padding: 8px 0;
+  font-size: 14.5px;
+  color: #0F172A;
   background: transparent;
   outline: none;
   font-family: inherit;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .mf-field-input::placeholder {
   color: #94A3B8;
+  font-weight: 500;
 }
 
 .mf-field-input:focus {
-  border-bottom-color: #4A6B74;
+  border-bottom-color: #0F766E;
 }
 
 /* Primary Action Button */
 .mf-btn-login-main {
   width: 100%;
-  background-color: #4A6B74;
+  background: linear-gradient(135deg, #0F766E 0%, #0D5F58 100%);
   color: #FFFFFF;
   border: none;
-  border-radius: 8px;
-  padding: 14px 20px;
-  font-size: 16px;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 12px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 6px;
+  transition: all 0.2s ease;
   font-family: inherit;
-  box-shadow: 0 4px 12px rgba(74, 107, 116, 0.25);
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.25);
 }
 
 .mf-btn-login-main:hover {
-  background-color: #3A5A63;
+  background: linear-gradient(135deg, #14B8A6 0%, #0F766E 100%);
   transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.35);
 }
 
 .mf-btn-login-main:active {
@@ -202,32 +201,32 @@
 .mf-or-divider {
   text-align: center;
   color: #94A3B8;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  margin: 20px 0;
+  margin: 16px 0;
 }
 
-/* Continue with Google Only (No Facebook!) */
+/* Continue with Google Only */
 .mf-google-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .mf-btn-continue-google {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
   background-color: #FFFFFF;
   border: 1px solid #CBD5E1;
   border-radius: 99px;
-  padding: 10px 24px;
-  font-size: 14px;
+  padding: 9px 22px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #334155;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   transition: all 0.2s ease;
 }
 
@@ -240,25 +239,25 @@
 
 /* Quick Demo Roles Strip */
 .mf-quick-demo-strip {
-  margin-top: 10px;
-  padding-top: 16px;
+  margin-top: 6px;
+  padding-top: 14px;
   border-top: 1px dashed #E2E8F0;
 }
 
 .mf-demo-title {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   text-align: center;
 }
 
 .mf-demo-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   justify-content: center;
 }
 
@@ -267,28 +266,29 @@
   color: #475569;
   border: 1px solid #E2E8F0;
   border-radius: 99px;
-  padding: 6px 14px;
-  font-size: 12px;
+  padding: 5px 12px;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .mf-demo-pill-btn:hover {
-  background: #E2E8F0;
-  color: #0F172A;
+  background: #E0F2FE;
+  color: #0369A1;
+  border-color: #BAE6FD;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 768px) {
   .mf-split-card {
     flex-direction: column;
   }
   .mf-split-left {
     width: 100%;
-    height: 240px;
+    height: 200px;
   }
   .mf-split-right {
     width: 100%;
-    padding: 32px 24px;
+    padding: 24px 20px;
   }
 }

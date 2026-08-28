@@ -7,8 +7,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 import './LoginPage.css';
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState('patient@mediflow.ai');
-  const [password, setPassword] = useState('••••••••');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState('login'); // 'login' | 'signup'
   const [loading, setLoading] = useState(false);
   const { setAuth } = useAuthStore();
@@ -16,9 +16,10 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleDevLogin = async (loginEmail) => {
+    const targetEmail = loginEmail || email || 'patient@mediflow.ai';
     setLoading(true);
     try {
-      const res = await api.post('/auth/google', { code: loginEmail });
+      const res = await api.post('/auth/google', { code: targetEmail });
       setAuth(res.user, res.access_token, res.refresh_token);
       addToast({ type: 'success', title: 'Welcome back!', message: `Logged in as ${res.user.full_name}` });
       navigate('/dashboard');
@@ -53,29 +54,35 @@ export const LoginPage = () => {
     flow: 'auth-code',
   });
 
+  const handleDemoSelect = (demoEmail) => {
+    setEmail(demoEmail);
+    setPassword('••••••••');
+    handleDevLogin(demoEmail);
+  };
+
   return (
     <div className="mf-split-wrapper">
       <div className="mf-split-card">
-        {/* LEFT COLUMN: Problem Statement Medical AI Hero Image */}
+        {/* LEFT COLUMN: Photorealistic Modern Hospital Photography */}
         <div className="mf-split-left">
           <img
-            src="/mediflow_login_hero.jpg"
-            alt="MediFlow AI Smart Hospital Queue Management"
+            src="/real_hospital_login_hero.jpg"
+            alt="MediFlow Smart Hospital Care"
             className="mf-split-left-img"
           />
           <div className="mf-split-left-overlay">
-            <span className="mf-left-badge">MediFlow AI Platform</span>
-            <h2 className="mf-left-title">Smart Hospital Queue & Patient Flow</h2>
+            <span className="mf-left-badge">MediFlow Health</span>
+            <h2 className="mf-left-title">Smart Hospital Queue</h2>
             <p className="mf-left-sub">
-              Automated AI triage routing, real-time token tracking, and instant digital check-ins for modern hospitals.
+              Streamlining clinical triage, patient flow, and digital check-ins.
             </p>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Matching Reference UI Form */}
+        {/* RIGHT COLUMN: Compact Professional Form */}
         <div className="mf-split-right">
           <h1 className="mf-right-greeting">
-            Hello, <span>Guys!</span>
+            Welcome to <span>MediFlow</span>
           </h1>
 
           {/* Login / SignUp Tab Bar */}
@@ -94,7 +101,7 @@ export const LoginPage = () => {
             </div>
           </div>
 
-          {/* Form Fields (Underline Minimal Style matching reference) */}
+          {/* Form Fields (Explicit Placeholders) */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -105,7 +112,7 @@ export const LoginPage = () => {
               <input
                 type="email"
                 className="mf-field-input"
-                placeholder="Enter your email"
+                placeholder="Username or Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -132,10 +139,10 @@ export const LoginPage = () => {
           {/* Or Divider */}
           <div className="mf-or-divider">Or</div>
 
-          {/* Continue with Google Only (NO Facebook!) */}
+          {/* Continue with Google Only */}
           <div className="mf-google-wrapper">
-            <button className="mf-btn-continue-google" onClick={() => googleLogin()} disabled={loading}>
-              <svg width="20" height="20" viewBox="0 0 24 24">
+            <button type="button" className="mf-btn-continue-google" onClick={() => googleLogin()} disabled={loading}>
+              <svg width="18" height="18" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -164,28 +171,28 @@ export const LoginPage = () => {
               <button
                 type="button"
                 className="mf-demo-pill-btn"
-                onClick={() => handleDevLogin('patient@mediflow.ai')}
+                onClick={() => handleDemoSelect('patient@mediflow.ai')}
               >
                 Patient
               </button>
               <button
                 type="button"
                 className="mf-demo-pill-btn"
-                onClick={() => handleDevLogin('nurse.mary@mediflow.ai')}
+                onClick={() => handleDemoSelect('nurse.mary@mediflow.ai')}
               >
                 Nurse
               </button>
               <button
                 type="button"
                 className="mf-demo-pill-btn"
-                onClick={() => handleDevLogin('dr.sharma@mediflow.ai')}
+                onClick={() => handleDemoSelect('dr.sharma@mediflow.ai')}
               >
                 Doctor
               </button>
               <button
                 type="button"
                 className="mf-demo-pill-btn"
-                onClick={() => handleDevLogin('admin@mediflow.ai')}
+                onClick={() => handleDemoSelect('admin@mediflow.ai')}
               >
                 Admin
               </button>
