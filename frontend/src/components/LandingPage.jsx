@@ -111,7 +111,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
           </div>
 
-          {/* Right Hero Graphic & Floating AI Card Overlay */}
+          {/* Right Hero Graphic */}
           <div className="mf-ref-hero-right">
             <div className="mf-ref-hero-img-box">
               {/* Handwritten Quote above Doctor */}
@@ -124,35 +124,6 @@ const LandingPage = ({ onGetStarted }) => {
                 alt="Indian female doctor examining child patient"
                 className="mf-ref-hero-img"
               />
-
-              {/* Floating AI Symptom Overlay Card */}
-              <div className="mf-ref-ai-card">
-                <div className="mf-ref-ai-header">
-                  <div className="mf-ref-ai-icon">⚙️</div>
-                  <div className="mf-ref-ai-title">AI Symptom Analysis</div>
-                </div>
-
-                <div className="mf-ref-ai-symptoms-lbl">Symptoms detected:</div>
-                <div className="mf-ref-symptom-item">
-                  <span>✓</span> Cough
-                </div>
-                <div className="mf-ref-symptom-item">
-                  <span>✓</span> Fever
-                </div>
-                <div className="mf-ref-symptom-item">
-                  <span>✓</span> Breathing difficulty
-                </div>
-
-                <div className="mf-ref-rec-box">
-                  <div className="mf-ref-rec-lbl">Recommended Specialist</div>
-                  <div className="mf-ref-rec-doctor">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span>🫁</span> Pediatric Pulmonologist
-                    </div>
-                    <span>→</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -399,7 +370,7 @@ const LandingPage = ({ onGetStarted }) => {
       <footer className="mf-ref-footer">
         <div className="mf-ref-footer-inner">
           <div className="mf-ref-footer-brand">
-            <div style={{ width: '28px', height: '28px', background: '#0D7A73', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '28px', height: '28px', background: '#0D7A73', borderRadius: '8px', display: 'flex', flexItems: 'center', justifyContent: 'center' }}>
               +
             </div>
             <span>SmartHospital</span>
