@@ -31,14 +31,12 @@ const LandingPage = ({ onGetStarted }) => {
       {/* 1. NAVBAR HEADER */}
       <header className="mf-ref-nav">
         <a href="#home" className="mf-ref-brand">
-          <div className="mf-ref-logo-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19 10.5H16.83L15.41 4.82C15.22 4.07 14.28 3.96 13.91 4.65L10.3 11.45L9.17 9.19C8.94 8.73 8.35 8.5 7.85 8.7L5 9.84V3H3V21H5V12.33L7.14 11.46L9.12 15.42C9.33 15.84 9.87 16.08 10.32 15.96C10.77 15.84 11.1 15.44 11.14 14.98L12.56 9.3L13.98 12.18C14.17 12.57 14.56 12.82 15 12.82H19V10.5Z"
-                fill="white"
-              />
-            </svg>
-          </div>
+          <img
+            src="/mediflow_logo.svg"
+            alt="MediFlow AI Logo"
+            className="mf-ref-logo-img"
+            style={{ width: '40px', height: '40px' }}
+          />
           <div>
             <div className="mf-ref-brand-title">
               Medi<span>Flow</span> AI
@@ -79,25 +77,35 @@ const LandingPage = ({ onGetStarted }) => {
         </div>
       </header>
 
-      {/* 2. HERO SECTION */}
-      <section id="home" className="mf-ref-hero-sec">
-        <div className="mf-ref-hero-grid">
-          {/* Left Text */}
-          <div className="mf-ref-hero-left">
-            <div className="mf-ref-hero-pill">
+      {/* 2. HERO SECTION (Exact Match to User Screenshot Banner Ratio & Alignment) */}
+      <section id="home" className="mf-screenshot-hero-sec">
+        {/* Full-Width Hero Background Image (Clean Architectural Smart Hospital Reception) */}
+        <img
+          src="/real_hospital_login_hero.jpg"
+          alt="Smart Hospital Reception and Digital Queue Lobby"
+          className="mf-screenshot-hero-bg-img"
+        />
+
+        {/* Gradient Overlay for Crisp Text Contrast */}
+        <div className="mf-screenshot-hero-overlay" />
+
+        <div className="mf-screenshot-hero-container">
+          {/* LEFT CONTENT AREA */}
+          <div className="mf-screenshot-hero-left">
+            <div className="mf-screenshot-pill">
               Smarter Healthcare • Happier Patients
             </div>
 
-            <h1 className="mf-ref-hero-title">
+            <h1 className="mf-screenshot-hero-title">
               Your Health.<br />
               <span>Our Priority.</span>
             </h1>
 
-            <p className="mf-ref-hero-sub">
+            <p className="mf-screenshot-hero-sub">
               AI-powered hospital queue and patient flow management for a faster, easier and smarter healthcare experience.
             </p>
 
-            <div className="mf-ref-hero-btns">
+            <div className="mf-screenshot-hero-btns">
               <button className="mf-ref-btn-doctor" onClick={handleLoginClick}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -120,19 +128,36 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
           </div>
 
-          {/* Right Hero Graphic */}
-          <div className="mf-ref-hero-right">
-            <div className="mf-ref-hero-img-box">
-              {/* Handwritten Quote above Doctor */}
-              <div className="mf-handwritten-quote">
-                Better Care Every Step ♡
-              </div>
+          {/* CENTER HANDWRITTEN QUOTE OVER DOCTOR */}
+          <div className="mf-screenshot-handwritten-quote">
+            Better Care Every Step ♡
+          </div>
 
-              <img
-                src="/mediflow_hero_doctor_child_v2.jpg"
-                alt="Indian female doctor examining child patient"
-                className="mf-ref-hero-img"
-              />
+          {/* RIGHT FLOATING AI SYMPTOM ANALYSIS GLASS CARD */}
+          <div className="mf-screenshot-ai-card">
+            <div className="mf-ai-card-header">
+              <div className="mf-ai-card-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M12 2v20M2 12h20"/>
+                </svg>
+              </div>
+              <div className="mf-ai-card-title">AI Symptom Analysis</div>
+            </div>
+
+            <div className="mf-ai-detected-lbl">Symptoms detected:</div>
+            <ul className="mf-ai-symptoms-list">
+              <li><span className="mf-check-green">✓</span> Cough</li>
+              <li><span className="mf-check-green">✓</span> Fever</li>
+              <li><span className="mf-check-green">✓</span> Breathing difficulty</li>
+            </ul>
+
+            <div className="mf-ai-rec-box">
+              <div className="mf-ai-rec-lbl">Recommended Specialist</div>
+              <div className="mf-ai-rec-item" onClick={handleLoginClick}>
+                <div className="mf-ai-spec-icon">🫁</div>
+                <div className="mf-ai-spec-text">Pediatric Pulmonologist</div>
+                <div className="mf-ai-spec-arrow">→</div>
+              </div>
             </div>
           </div>
         </div>
@@ -175,10 +200,10 @@ const LandingPage = ({ onGetStarted }) => {
         </div>
       </section>
 
-      {/* 4. HOW IT WORKS (Ultra-Rich Detailed Step Cards) */}
+      {/* 4. HOW IT WORKS (Reference Image Editorial Asymmetrical Composition) */}
       <section id="how-it-works" className="mf-ref-how-sec">
         <div className="mf-ref-how-grid">
-          {/* Left Title */}
+          {/* Left Title & Steps */}
           <div className="mf-ref-how-left">
             <div className="mf-ref-tag-sm">HOW IT WORKS</div>
             <h2 className="mf-ref-how-h2">
@@ -188,82 +213,141 @@ const LandingPage = ({ onGetStarted }) => {
               Just a few easy steps to connect you with the right doctor and get the care you need.
             </p>
             <div className="mf-ref-handwriting">Simple. Smart. Secure.</div>
+
+            {/* Step Cards Stack */}
+            <div className="mf-ref-steps-grid">
+              {/* Step 01 */}
+              <div className="mf-ref-step-card" onClick={handleLoginClick}>
+                <div className="mf-step-top-bar s1" />
+                <div>
+                  <div className="mf-ref-step-icon-box s1">📄</div>
+                  <div className="mf-ref-step-num">01</div>
+                  <h3 className="mf-ref-step-h3">Tell Us Your Symptoms</h3>
+                  <p className="mf-ref-step-desc">Enter your symptoms and basic details online or via kiosk.</p>
+                </div>
+                <div className="mf-step-detail-box">
+                  <div className="mf-step-detail-header">
+                    <span>Symptom Input</span>
+                    <span className="mf-step-badge-tag tag1">INSTANT</span>
+                  </div>
+                  <div className="mf-step-detail-txt">e.g. Fever, Cough, Chest Pain</div>
+                </div>
+                <div className="mf-ref-arrow-next">→</div>
+              </div>
+
+              {/* Step 02 */}
+              <div className="mf-ref-step-card" onClick={handleLoginClick}>
+                <div className="mf-step-top-bar s2" />
+                <div>
+                  <div className="mf-ref-step-icon-box s2">🧠</div>
+                  <div className="mf-ref-step-num">02</div>
+                  <h3 className="mf-ref-step-h3">AI Analysis & Triage</h3>
+                  <p className="mf-ref-step-desc">Our AI algorithm classifies urgency level from P1 to P5.</p>
+                </div>
+                <div className="mf-step-detail-box">
+                  <div className="mf-step-detail-header">
+                    <span>AI ML Engine</span>
+                    <span className="mf-step-badge-tag tag2">&lt; 2s TRIAGE</span>
+                  </div>
+                  <div className="mf-step-detail-txt">P1 Emergency to P5 Routine</div>
+                </div>
+                <div className="mf-ref-arrow-next">→</div>
+              </div>
+
+              {/* Step 03 */}
+              <div className="mf-ref-step-card" onClick={handleLoginClick}>
+                <div className="mf-step-top-bar s3" />
+                <div>
+                  <div className="mf-ref-step-icon-box s3">👨‍⚕️</div>
+                  <div className="mf-ref-step-num">03</div>
+                  <h3 className="mf-ref-step-h3">Find Your Doctor</h3>
+                  <p className="mf-ref-step-desc">Matched with specialty doctor & active consultation room.</p>
+                </div>
+                <div className="mf-step-detail-box">
+                  <div className="mf-step-detail-header">
+                    <span>Doctor Match</span>
+                    <span className="mf-step-badge-tag tag3">LIVE CABIN</span>
+                  </div>
+                  <div className="mf-step-detail-txt">Dr. Sharma • Cardiology Cabin 1</div>
+                </div>
+                <div className="mf-ref-arrow-next">→</div>
+              </div>
+
+              {/* Step 04 */}
+              <div className="mf-ref-step-card" onClick={handleLoginClick}>
+                <div className="mf-step-top-bar s4" />
+                <div>
+                  <div className="mf-ref-step-icon-box s4">🎫</div>
+                  <div className="mf-ref-step-num">04</div>
+                  <h3 className="mf-ref-step-h3">Join Queue & Track</h3>
+                  <p className="mf-ref-step-desc">Get a digital token and monitor live ETA on your phone.</p>
+                </div>
+                <div className="mf-step-detail-box">
+                  <div className="mf-step-detail-header">
+                    <span>Live Queue</span>
+                    <span className="mf-step-badge-tag tag4">#46 TOKEN</span>
+                  </div>
+                  <div className="mf-step-detail-txt">Serving #45 • Est. Wait: 12m</div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Right 4 Horizontal Step Cards with Rich Detail Boxes */}
-          <div className="mf-ref-steps-grid">
-            {/* Step 01 */}
-            <div className="mf-ref-step-card" onClick={handleLoginClick}>
-              <div className="mf-step-top-bar s1" />
-              <div>
-                <div className="mf-ref-step-icon-box s1">📄</div>
-                <div className="mf-ref-step-num">01</div>
-                <h3 className="mf-ref-step-h3">Tell Us Your Symptoms</h3>
-                <p className="mf-ref-step-desc">Enter your symptoms and basic details online or via kiosk.</p>
-              </div>
-              <div className="mf-step-detail-box">
-                <div className="mf-step-detail-header">
-                  <span>Symptom Input</span>
-                  <span className="mf-step-badge-tag tag1">INSTANT</span>
+          {/* Right Side: Reference Image Asymmetrical Diamond Photo Grid */}
+          <div className="mf-ref-diamond-wrapper">
+            <div className="mf-ref-diamond-grid">
+              {/* Diamond 1 - Patient Arrival & Digital Registration */}
+              <div className="mf-ref-diamond-card d-top">
+                <img
+                  src="/real_hospital_login_hero.jpg"
+                  alt="Smart hospital reception and patient registration flow"
+                />
+                <div className="mf-ref-diamond-overlay">
+                  <span>Patient Check-In</span>
                 </div>
-                <div className="mf-step-detail-txt">e.g. Fever, Cough, Chest Pain</div>
               </div>
-              <div className="mf-ref-arrow-next">→</div>
-            </div>
 
-            {/* Step 02 */}
-            <div className="mf-ref-step-card" onClick={handleLoginClick}>
-              <div className="mf-step-top-bar s2" />
-              <div>
-                <div className="mf-ref-step-icon-box s2">🧠</div>
-                <div className="mf-ref-step-num">02</div>
-                <h3 className="mf-ref-step-h3">AI Analysis & Triage</h3>
-                <p className="mf-ref-step-desc">Our AI algorithm classifies urgency level from P1 to P5.</p>
-              </div>
-              <div className="mf-step-detail-box">
-                <div className="mf-step-detail-header">
-                  <span>AI ML Engine</span>
-                  <span className="mf-step-badge-tag tag2">&lt; 2s TRIAGE</span>
+              {/* Diamond 2 - Smart Queue & Digital Token Screen */}
+              <div className="mf-ref-diamond-card d-right">
+                <img
+                  src="/mediflow_login_hero.jpg"
+                  alt="Smart hospital queue display screen and waiting area"
+                />
+                <div className="mf-ref-diamond-overlay">
+                  <span>Digital Token Queue</span>
                 </div>
-                <div className="mf-step-detail-txt">P1 Emergency to P5 Routine</div>
               </div>
-              <div className="mf-ref-arrow-next">→</div>
-            </div>
 
-            {/* Step 03 */}
-            <div className="mf-ref-step-card" onClick={handleLoginClick}>
-              <div className="mf-step-top-bar s3" />
-              <div>
-                <div className="mf-ref-step-icon-box s3">👨‍⚕️</div>
-                <div className="mf-ref-step-num">03</div>
-                <h3 className="mf-ref-step-h3">Find Your Doctor</h3>
-                <p className="mf-ref-step-desc">Matched with specialty doctor & active consultation room.</p>
-              </div>
-              <div className="mf-step-detail-box">
-                <div className="mf-step-detail-header">
-                  <span>Doctor Match</span>
-                  <span className="mf-step-badge-tag tag3">LIVE CABIN</span>
+              {/* Diamond 3 - Doctor Consultation & Care Flow */}
+              <div className="mf-ref-diamond-card d-bottom">
+                <img
+                  src="/mediflow_login_hero.jpg"
+                  alt="Smart hospital consultation and clinical flow"
+                />
+                <div className="mf-ref-diamond-overlay">
+                  <span>Doctor Consultation</span>
                 </div>
-                <div className="mf-step-detail-txt">Dr. Sharma • Cardiology Cabin 1</div>
               </div>
-              <div className="mf-ref-arrow-next">→</div>
-            </div>
 
-            {/* Step 04 */}
-            <div className="mf-ref-step-card" onClick={handleLoginClick}>
-              <div className="mf-step-top-bar s4" />
-              <div>
-                <div className="mf-ref-step-icon-box s4">🎫</div>
-                <div className="mf-ref-step-num">04</div>
-                <h3 className="mf-ref-step-h3">Join Queue & Track</h3>
-                <p className="mf-ref-step-desc">Get a digital token and monitor live ETA on your phone.</p>
-              </div>
-              <div className="mf-step-detail-box">
-                <div className="mf-step-detail-header">
-                  <span>Live Queue</span>
-                  <span className="mf-step-badge-tag tag4">#46 TOKEN</span>
+              {/* Diamond 4 - Real-time Hospital Triage Care */}
+              <div className="mf-ref-diamond-card d-left">
+                <img
+                  src="/mediflow_emergency_stethoscope.jpg"
+                  alt="Real-time triage and patient flow management"
+                />
+                <div className="mf-ref-diamond-overlay">
+                  <span>AI Triage System</span>
                 </div>
-                <div className="mf-step-detail-txt">Serving #45 • Est. Wait: 12m</div>
+              </div>
+
+              {/* Center Floating Emblem (Reference Image Style) */}
+              <div className="mf-ref-diamond-center-emblem">
+                <div className="mf-emblem-inner">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 10.5H16.83L15.41 4.82C15.22 4.07 14.28 3.96 13.91 4.65L10.3 11.45L9.17 9.19C8.94 8.73 8.35 8.5 7.85 8.7L5 9.84V3H3V21H5V12.33L7.14 11.46L9.12 15.42C9.33 15.84 9.87 16.08 10.32 15.96C10.77 15.84 11.1 15.44 11.14 14.98L12.56 9.3L13.98 12.18C14.17 12.57 14.56 12.82 15 12.82H19V10.5Z" fill="#F3C969"/>
+                  </svg>
+                  <span>MediFlow AI</span>
+                </div>
               </div>
             </div>
           </div>
@@ -288,7 +372,7 @@ const LandingPage = ({ onGetStarted }) => {
           {/* Center 8 Specialties Cards */}
           <div className="mf-ref-spec-grid">
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>🫁</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(37, 99, 235, 0.15)', color: '#60A5FA' }}>🫁</div>
               <div>
                 <div className="mf-ref-spec-name">Pulmonology</div>
                 <div className="mf-ref-spec-sub">Breathing & respiratory</div>
@@ -296,7 +380,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#FFE4E6', color: '#E11D48' }}>❤️</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(225, 29, 72, 0.15)', color: '#F43F5E' }}>❤️</div>
               <div>
                 <div className="mf-ref-spec-name">Cardiology</div>
                 <div className="mf-ref-spec-sub">Heart related</div>
@@ -304,7 +388,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>🩺</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#4ADE80' }}>🩺</div>
               <div>
                 <div className="mf-ref-spec-name">Dermatology</div>
                 <div className="mf-ref-spec-sub">Skin related</div>
@@ -312,7 +396,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#F3E8FF', color: '#9333EA' }}>🧠</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(147, 51, 234, 0.15)', color: '#C084FC' }}>🧠</div>
               <div>
                 <div className="mf-ref-spec-name">Neurology</div>
                 <div className="mf-ref-spec-sub">Brain & nervous system</div>
@@ -320,7 +404,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>👂</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(217, 119, 6, 0.15)', color: '#FBBF24' }}>👂</div>
               <div>
                 <div className="mf-ref-spec-name">ENT</div>
                 <div className="mf-ref-spec-sub">Ear, nose & throat</div>
@@ -328,7 +412,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#E0F2FE', color: '#0284C7' }}>🦴</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(2, 132, 199, 0.15)', color: '#38BDF8' }}>🦴</div>
               <div>
                 <div className="mf-ref-spec-name">Orthopedics</div>
                 <div className="mf-ref-spec-sub">Bones & joints</div>
@@ -336,7 +420,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#FFEDD5', color: '#EA580C' }}>👶</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(234, 88, 12, 0.15)', color: '#FB923C' }}>👶</div>
               <div>
                 <div className="mf-ref-spec-name">Pediatrics</div>
                 <div className="mf-ref-spec-sub">Child healthcare</div>
@@ -344,7 +428,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-spec-card" onClick={handleLoginClick}>
-              <div className="mf-ref-spec-icon" style={{ background: '#E0E7FF', color: '#4F46E5' }}>👁️</div>
+              <div className="mf-ref-spec-icon" style={{ background: 'rgba(79, 70, 229, 0.15)', color: '#818CF8' }}>👁️</div>
               <div>
                 <div className="mf-ref-spec-name">Ophthalmology</div>
                 <div className="mf-ref-spec-sub">Eye care</div>
@@ -352,19 +436,19 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
           </div>
 
-          {/* Right Emergency Help Card */}
+          {/* Right Emergency Help Card (Reference Glassmorphic Feature Overlay) */}
           <div className="mf-ref-emerg-card">
             <img
               src="/mediflow_emergency_stethoscope.jpg"
-              alt="Emergency Stethoscope"
+              alt="Smart Hospital Emergency Triage Care"
               className="mf-ref-emerg-bg-img"
             />
             <div style={{ position: 'relative', zIndex: 5 }}>
               <div style={{ fontSize: '24px', marginBottom: '8px' }}>🚨</div>
-              <h3 style={{ fontSize: '20px', fontWeight: '800', margin: '0 0 8px 0' }}>
+              <h3 style={{ fontSize: '20px', fontWeight: '800', margin: '0 0 8px 0', color: '#FFFFFF' }}>
                 Need Emergency Help?
               </h3>
-              <p style={{ fontSize: '12.5px', opacity: 0.9, lineHeight: 1.5, margin: 0 }}>
+              <p style={{ fontSize: '12.5px', opacity: 0.9, lineHeight: 1.5, margin: 0, color: '#CBD5E1' }}>
                 If you are experiencing severe symptoms, seek immediate medical attention.
               </p>
             </div>
@@ -388,7 +472,7 @@ const LandingPage = ({ onGetStarted }) => {
 
           <div className="mf-ref-services-grid">
             <div className="mf-ref-service-card">
-              <div className="mf-ref-service-icon-box" style={{ background: '#DBEAFE', color: '#2563EB' }}>🩺</div>
+              <div className="mf-ref-service-icon-box" style={{ background: 'rgba(37, 99, 235, 0.15)', color: '#60A5FA' }}>🩺</div>
               <h3 className="mf-ref-service-h3">Smart Symptom Triage</h3>
               <p className="mf-ref-service-p">
                 Automated intake system classifying urgency levels (P1 to P5) using machine learning models to prioritize critical care.
@@ -396,7 +480,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-service-card">
-              <div className="mf-ref-service-icon-box" style={{ background: '#DCFCE7', color: '#16A34A' }}>⚡</div>
+              <div className="mf-ref-service-icon-box" style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#4ADE80' }}>⚡</div>
               <h3 className="mf-ref-service-h3">Live Queue Tracking</h3>
               <p className="mf-ref-service-p">
                 Real-time digital token tracking and SMS queue alerts so patients can wait comfortably without crowding reception areas.
@@ -404,7 +488,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-service-card">
-              <div className="mf-ref-service-icon-box" style={{ background: '#F3E8FF', color: '#9333EA' }}>🏥</div>
+              <div className="mf-ref-service-icon-box" style={{ background: 'rgba(147, 51, 234, 0.15)', color: '#C084FC' }}>🏥</div>
               <h3 className="mf-ref-service-h3">Room & Bed Management</h3>
               <p className="mf-ref-service-p">
                 Dynamic allocation of consultation cabins, OPD rooms, and ICU beds to eliminate operational bottlenecks.
@@ -412,7 +496,7 @@ const LandingPage = ({ onGetStarted }) => {
             </div>
 
             <div className="mf-ref-service-card">
-              <div className="mf-ref-service-icon-box" style={{ background: '#FEF3C7', color: '#D97706' }}>💳</div>
+              <div className="mf-ref-service-icon-box" style={{ background: 'rgba(217, 119, 6, 0.15)', color: '#FBBF24' }}>💳</div>
               <h3 className="mf-ref-service-h3">Automated Billing & Rx</h3>
               <p className="mf-ref-service-p">
                 Direct integration between doctors, pharmacy counters, and payment gateways for instant invoice generation.
@@ -494,9 +578,11 @@ const LandingPage = ({ onGetStarted }) => {
       <footer className="mf-ref-footer">
         <div className="mf-ref-footer-inner">
           <div className="mf-ref-footer-brand">
-            <div style={{ width: '28px', height: '28px', background: '#0D7A73', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              +
-            </div>
+            <img
+              src="/mediflow_logo.svg"
+              alt="MediFlow AI Logo"
+              style={{ width: '32px', height: '32px' }}
+            />
             <span>MediFlow AI</span>
           </div>
 
@@ -522,4 +608,4 @@ const LandingPage = ({ onGetStarted }) => {
   );
 };
 
-export default LandingPage;
+export default LandingPage;

@@ -25,9 +25,7 @@ export const LoginPage = () => {
       navigate('/dashboard');
     } catch (err) {
       addToast({ type: 'error', title: 'Login Failed', message: err.message || 'Error signing in' });
-    } finally {
-      setLoading(false);
-    }
+    } opacity: setLoading(false);
   };
 
   const handleGoogleSuccess = async (tokenResponse) => {
@@ -61,87 +59,118 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="mf-split-wrapper">
-      <div className="mf-split-card">
-        {/* LEFT COLUMN: Photorealistic Modern Hospital Photography */}
-        <div className="mf-split-left">
+    <div className="mf-ui-wrapper">
+      <div className="mf-ui-card">
+        {/* LEFT PANEL: Clean Professional Smart Hospital Visual Card */}
+        <div className="mf-ui-left">
           <img
             src="/real_hospital_login_hero.jpg"
             alt="MediFlow Smart Hospital Care"
-            className="mf-split-left-img"
+            className="mf-ui-left-bg"
           />
-          <div className="mf-split-left-overlay">
-            <span className="mf-left-badge">MediFlow Health</span>
-            <h2 className="mf-left-title">Smart Hospital Queue</h2>
-            <p className="mf-left-sub">
-              Streamlining clinical triage, patient flow, and digital check-ins.
-            </p>
+          <div className="mf-ui-left-gradient" />
+
+          {/* Top Bar inside Left Panel */}
+          <div className="mf-ui-left-top">
+            <span className="mf-ui-left-brand">Smart Patient Care</span>
+            <div className="mf-ui-left-pills">
+              <button
+                type="button"
+                className={`mf-ui-left-pill ${activeTab === 'login' ? 'active' : ''}`}
+                onClick={() => setActiveTab('login')}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                className={`mf-ui-left-pill-join ${activeTab === 'signup' ? 'active' : ''}`}
+                onClick={() => setActiveTab('signup')}
+              >
+                Join Us
+              </button>
+            </div>
+          </div>
+
+          {/* Clean Subtle Bottom Tag */}
+          <div className="mf-ui-left-bottom">
+            <div className="mf-ui-bottom-tag">
+              AI-Powered Queue & Patient Flow System
+            </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Compact Professional Form */}
-        <div className="mf-split-right">
-          <h1 className="mf-right-greeting">
-            Welcome to <span>MediFlow</span>
-          </h1>
-
-          {/* Login / SignUp Tab Bar */}
-          <div className="mf-auth-tabs">
-            <div
-              className={`mf-tab-item ${activeTab === 'login' ? 'active' : ''}`}
-              onClick={() => setActiveTab('login')}
-            >
-              Login
+        {/* RIGHT PANEL: Reference Style Clean White Form Panel */}
+        <div className="mf-ui-right">
+          {/* Top Brand Header */}
+          <div className="mf-ui-right-header">
+            <div className="mf-ui-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <img src="/mediflow_logo.svg" alt="MediFlow AI Logo" style={{ width: '28px', height: '28px' }} />
+              <span>MEDIFLOW AI</span>
             </div>
-            <div
-              className={`mf-tab-item ${activeTab === 'signup' ? 'active' : ''}`}
-              onClick={() => setActiveTab('signup')}
-            >
-              SignUp
+            <div className="mf-ui-lang-selector">
+              <span>🌐 EN</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
             </div>
           </div>
 
-          {/* Form Fields (Explicit Placeholders) */}
+          {/* Greeting Title */}
+          <div className="mf-ui-greeting-box">
+            <h1 className="mf-ui-title">
+              Hi {activeTab === 'login' ? 'User' : 'Patient'}
+            </h1>
+            <p className="mf-ui-sub">
+              Welcome to {activeTab === 'login' ? 'MediFlow AI' : 'MediFlow Registration'}
+            </p>
+          </div>
+
+          {/* Form Fields */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleDevLogin(email);
             }}
           >
-            <div className="mf-field-container">
+            <div className="mf-ui-field-group">
               <input
                 type="email"
-                className="mf-field-input"
-                placeholder="Username or Email address"
+                className="mf-ui-input"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mf-field-container">
+            <div className="mf-ui-field-group">
               <input
                 type="password"
-                className="mf-field-input"
-                placeholder="Enter Password"
+                className="mf-ui-input"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+              <div className="mf-ui-forgot">
+                <a href="#forgot" onClick={(e) => { e.preventDefault(); addToast({ type: 'info', title: 'Password Reset', message: 'Demo reset link sent' }); }}>
+                  Forgot password ?
+                </a>
+              </div>
             </div>
 
-            {/* Primary Action Button */}
-            <button type="submit" className="mf-btn-login-main" disabled={loading}>
-              {loading ? 'Signing In...' : 'Login'}
-            </button>
-          </form>
+            {/* Divider */}
+            <div className="mf-ui-divider">
+              <span>or</span>
+            </div>
 
-          {/* Or Divider */}
-          <div className="mf-or-divider">Or</div>
-
-          {/* Continue with Google Only */}
-          <div className="mf-google-wrapper">
-            <button type="button" className="mf-btn-continue-google" onClick={() => googleLogin()} disabled={loading}>
+            {/* Google SSO Button */}
+            <button
+              type="button"
+              className="mf-ui-google-btn"
+              onClick={() => googleLogin()}
+              disabled={loading}
+            >
               <svg width="18" height="18" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"
@@ -160,43 +189,55 @@ export const LoginPage = () => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              <span>Continue with Google</span>
+              <span>Login with Google</span>
             </button>
+
+            {/* Primary Action Button (Vibrant Coral Red / Blue Primary matching reference) */}
+            <button type="submit" className="mf-ui-primary-btn" disabled={loading}>
+              {loading ? 'Processing...' : activeTab === 'login' ? 'Login' : 'Sign Up'}
+            </button>
+          </form>
+
+          {/* Switch Tab Subtext */}
+          <div className="mf-ui-switch-text">
+            {activeTab === 'login' ? (
+              <>
+                Don't have an account?{' '}
+                <span onClick={() => setActiveTab('signup')}>Sign up</span>
+              </>
+            ) : (
+              <>
+                Already have an account?{' '}
+                <span onClick={() => setActiveTab('login')}>Sign in</span>
+              </>
+            )}
           </div>
 
-          {/* Quick Demo Roles Strip */}
-          <div className="mf-quick-demo-strip">
-            <div className="mf-demo-title">Quick Demo Logins</div>
-            <div className="mf-demo-pills">
-              <button
-                type="button"
-                className="mf-demo-pill-btn"
-                onClick={() => handleDemoSelect('patient@mediflow.ai')}
-              >
-                Patient
-              </button>
-              <button
-                type="button"
-                className="mf-demo-pill-btn"
-                onClick={() => handleDemoSelect('nurse.mary@mediflow.ai')}
-              >
-                Nurse
-              </button>
-              <button
-                type="button"
-                className="mf-demo-pill-btn"
-                onClick={() => handleDemoSelect('dr.sharma@mediflow.ai')}
-              >
-                Doctor
-              </button>
-              <button
-                type="button"
-                className="mf-demo-pill-btn"
-                onClick={() => handleDemoSelect('admin@mediflow.ai')}
-              >
-                Admin
-              </button>
+          {/* Quick Demo Logins Strip */}
+          <div className="mf-ui-demo-strip">
+            <div className="mf-ui-demo-lbl">Quick Demo Login</div>
+            <div className="mf-ui-demo-btns">
+              <button type="button" onClick={() => handleDemoSelect('patient@mediflow.ai')}>Patient</button>
+              <button type="button" onClick={() => handleDemoSelect('nurse.mary@mediflow.ai')}>Nurse</button>
+              <button type="button" onClick={() => handleDemoSelect('dr.sharma@mediflow.ai')}>Doctor</button>
+              <button type="button" onClick={() => handleDemoSelect('admin@mediflow.ai')}>Admin</button>
             </div>
+          </div>
+
+          {/* Social Footer Icons */}
+          <div className="mf-ui-social-footer">
+            <a href="#facebook" onClick={(e) => e.preventDefault()} aria-label="Facebook">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#twitter" onClick={(e) => e.preventDefault()} aria-label="Twitter">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+            </a>
+            <a href="#linkedin" onClick={(e) => e.preventDefault()} aria-label="LinkedIn">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="#instagram" onClick={(e) => e.preventDefault()} aria-label="Instagram">
+              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
           </div>
         </div>
       </div>
