@@ -114,9 +114,14 @@ const LandingPage = ({ onGetStarted }) => {
           {/* Right Hero Graphic & Floating AI Card Overlay */}
           <div className="mf-ref-hero-right">
             <div className="mf-ref-hero-img-box">
+              {/* Handwritten Quote above Doctor */}
+              <div className="mf-handwritten-quote">
+                Better Care Every Step ♡
+              </div>
+
               <img
                 src="/mediflow_hero_doctor_child.jpg"
-                alt="Doctor examining patient"
+                alt="Indian female doctor examining child patient"
                 className="mf-ref-hero-img"
               />
 
