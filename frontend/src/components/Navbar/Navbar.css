@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
 
-/* ── MediFlow Clean Royal Medical Palette & Flat Premium Navbar ── */
+/* ── MediFlow Clean Royal Medical Palette & Font System ────── */
 :root {
   --mf-royal-blue: #2563EB;
   --mf-royal-dark: #1D4ED8;
@@ -13,7 +13,7 @@
   
   --mf-border: #E2E8F0;
   --mf-glass-bg: rgba(255, 255, 255, 0.96);
-  --mf-font-body: 'Plus Jakarta Sans', sans-serif;
+  --mf-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --mf-font-heading: 'Outfit', sans-serif;
 }
 
@@ -69,9 +69,9 @@
 
 .mf-brand-title {
   font-family: var(--mf-font-heading);
-  font-size: 25px;
+  font-size: 26px;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
   color: var(--mf-dark-text);
   line-height: 1;
 }
@@ -86,6 +86,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-left: 4px;
+  font-weight: 800;
 }
 
 /* ── Center: Clean Flat Horizontal Navigation ───────────── */
@@ -99,9 +100,11 @@
 }
 
 .mf-nav-link {
+  font-family: var(--mf-font-body);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
+  letter-spacing: -0.1px;
   color: var(--mf-nav-text);
   padding: 8px 18px;
   border-radius: 8px;
@@ -140,10 +143,12 @@
 }
 
 .mf-primary-cta {
+  font-family: var(--mf-font-body);
   background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
   color: #FFFFFF;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0.2px;
   padding: 11px 24px;
   border-radius: 10px;
   border: none;
