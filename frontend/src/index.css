@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base Styles ────────────────────────────────────────── */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-surface text-slate-50 font-sans antialiased;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-light;
+  }
+}
+
+/* ── Component Styles ───────────────────────────────────── */
+@layer components {
+  /* Glassmorphism card */
+  .glass-card {
+    @apply bg-surface-card/80 backdrop-blur-xl border border-surface-border/30 rounded-2xl shadow-xl;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-light to-secondary bg-clip-text text-transparent;
+  }
+
+  /* Status badges */
+  .badge-p1 {
+    @apply bg-triage-p1/20 text-triage-p1 border border-triage-p1/30;
+  }
+  .badge-p2 {
+    @apply bg-triage-p2/20 text-triage-p2 border border-triage-p2/30;
+  }
+  .badge-p3 {
+    @apply bg-triage-p3/20 text-triage-p3 border border-triage-p3/30;
+  }
+  .badge-p4 {
+    @apply bg-triage-p4/20 text-triage-p4 border border-triage-p4/30;
+  }
+  .badge-p5 {
+    @apply bg-triage-p5/20 text-triage-p5 border border-triage-p5/30;
+  }
+
+  /* Button base */
+  .btn {
+    @apply px-4 py-2.5 rounded-xl font-medium transition-all duration-200 
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 
+           focus-visible:ring-offset-surface disabled:opacity-50 disabled:cursor-not-allowed
+           active:scale-[0.98] select-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary hover:bg-primary-light text-white shadow-lg shadow-primary/25
+           focus-visible:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary/20 hover:bg-secondary/30 text-secondary-light border border-secondary/30
+           focus-visible:ring-secondary;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30
+           focus-visible:ring-red-500;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-surface-hover text-slate-300
+           focus-visible:ring-slate-500;
+  }
+
+  /* Input base */
+  .input {
+    @apply w-full px-4 py-2.5 bg-surface border border-surface-border rounded-xl
+           text-slate-100 placeholder-slate-500
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary
+           transition-all duration-200;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 
+           hover:text-slate-100 hover:bg-surface-hover transition-all duration-200
+           cursor-pointer select-none;
+  }
+
+  .sidebar-item-active {
+    @apply sidebar-item bg-primary/15 text-primary-light border-l-2 border-primary-light;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
