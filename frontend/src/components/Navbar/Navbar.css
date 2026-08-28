@@ -2,19 +2,19 @@
 
 /* ── MediFlow Ultra-Premium Healthcare Navbar Design System ── */
 :root {
-  --mf-teal-primary: #0B6E69;
-  --mf-teal-emerald: #10B981;
-  --mf-teal-dark: #074E4A;
-  --mf-teal-light: #F0FDF9;
-  --mf-teal-glow: rgba(11, 110, 105, 0.15);
+  --mf-teal-primary: #0284C7;        /* Vibrant Medical Ocean Blue-Teal */
+  --mf-teal-emerald: #0EA5E9;        /* High-clarity Cyan Accent */
+  --mf-teal-dark: #0369A1;           /* Deep Trust Blue */
+  --mf-teal-light: #F0F9FF;          /* Crisp Ice Tint */
+  --mf-teal-glow: rgba(2, 132, 199, 0.15);
   
-  --mf-dark-text: #0F172A;
-  --mf-muted-text: #475569;
-  --mf-subtle-text: #64748B;
+  --mf-dark-text: #0F172A;           /* Deep Charcoal - High Contrast */
+  --mf-muted-text: #1E293B;          /* Dark Slate - Crisp Legibility */
+  --mf-subtle-text: #334155;         /* Medium Slate Subtext */
   
-  --mf-border-light: rgba(226, 232, 240, 0.8);
-  --mf-border-teal: rgba(11, 110, 105, 0.12);
-  --mf-glass-bg: rgba(255, 255, 255, 0.88);
+  --mf-border-light: rgba(203, 213, 225, 0.8);
+  --mf-border-teal: rgba(2, 132, 199, 0.15);
+  --mf-glass-bg: rgba(255, 255, 255, 0.94);
   --mf-font-body: 'Plus Jakarta Sans', sans-serif;
   --mf-font-heading: 'Outfit', sans-serif;
 }
@@ -36,7 +36,7 @@
 .mf-top-accent-line {
   height: 3px;
   width: 100%;
-  background: linear-gradient(90deg, #0B6E69 0%, #10B981 50%, #6366F1 100%);
+  background: linear-gradient(90deg, #0284C7 0%, #0EA5E9 50%, #0F766E 100%);
 }
 
 .mf-navbar-container {
@@ -63,7 +63,7 @@
   position: relative;
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, var(--mf-teal-primary) 0%, var(--mf-teal-emerald) 100%);
+  background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 100%);
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -74,7 +74,7 @@
 
 .mf-brand-group:hover .mf-logo-badge {
   transform: scale(1.05) rotate(-2deg);
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.35);
 }
 
 .mf-logo-pulse-ring {
@@ -104,7 +104,7 @@
 }
 
 .mf-brand-title .highlight {
-  background: linear-gradient(135deg, #0B6E69 0%, #10B981 100%);
+  background: linear-gradient(135deg, #0284C7 0%, #0EA5E9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -121,32 +121,32 @@
   font-weight: 800;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: var(--mf-teal-primary);
+  color: #0284C7;
 }
 
 .mf-ai-badge {
   font-size: 9px;
-  font-weight: 700;
-  padding: 1px 6px;
+  font-weight: 800;
+  padding: 1px 7px;
   border-radius: 99px;
-  background: var(--mf-teal-light);
-  color: var(--mf-teal-primary);
-  border: 1px solid rgba(11, 110, 105, 0.2);
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid rgba(2, 132, 199, 0.25);
 }
 
 /* ── Center Floating Navigation Bar ─────────────────────── */
 .mf-nav-floating-pill {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--mf-border-light);
+  background: #FFFFFF;
+  border: 1px solid rgba(203, 213, 225, 0.8);
   padding: 6px 8px;
   border-radius: 999px;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
   transition: all 0.3s ease;
 }
 
 .mf-nav-floating-pill:hover {
-  border-color: var(--mf-border-teal);
-  box-shadow: 0 6px 24px rgba(11, 110, 105, 0.08);
+  border-color: rgba(2, 132, 199, 0.3);
+  box-shadow: 0 6px 24px rgba(2, 132, 199, 0.1);
 }
 
 .mf-nav-list {
@@ -164,9 +164,9 @@
 
 .mf-nav-link {
   text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--mf-muted-text);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1E293B;
   padding: 9px 20px;
   border-radius: 999px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -176,16 +176,17 @@
 }
 
 .mf-nav-link:hover {
-  color: var(--mf-dark-text);
-  background: rgba(240, 253, 249, 0.8);
+  color: #0284C7;
+  background: #F0F9FF;
 }
 
 /* Active State Design */
 .mf-nav-link.active {
-  color: var(--mf-teal-primary);
-  font-weight: 700;
-  background: #FFFFFF;
-  box-shadow: 0 2px 10px rgba(11, 110, 105, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: #0284C7;
+  font-weight: 800;
+  background: #F0F9FF;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.12);
+  border: 1px solid rgba(2, 132, 199, 0.2);
 }
 
 .mf-link-badge {
@@ -194,7 +195,7 @@
   text-transform: uppercase;
   padding: 2px 6px;
   border-radius: 99px;
-  background: linear-gradient(135deg, #10B981, #059669);
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
   color: #FFFFFF;
   margin-left: 2px;
 }
@@ -211,25 +212,25 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
-  background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.18);
+  padding: 7px 16px;
+  background: rgba(225, 29, 72, 0.08);
+  border: 1px solid rgba(225, 29, 72, 0.25);
   border-radius: 99px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #DC2626;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #E11D48;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .mf-emergency-badge:hover {
-  background: rgba(239, 68, 68, 0.12);
+  background: rgba(225, 29, 72, 0.15);
 }
 
 .mf-pulse-dot {
   width: 8px;
   height: 8px;
-  background-color: #EF4444;
+  background-color: #E11D48;
   border-radius: 50%;
   position: relative;
 }
@@ -239,7 +240,7 @@
   position: absolute;
   inset: -3px;
   border-radius: 50%;
-  background-color: #EF4444;
+  background-color: #E11D48;
   opacity: 0.6;
   animation: mfPulse 1.8s infinite;
 }
@@ -251,9 +252,9 @@
 
 /* Primary CTA Button */
 .mf-primary-cta {
-  background: linear-gradient(135deg, var(--mf-teal-primary) 0%, var(--mf-teal-dark) 100%);
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   padding: 12px 24px;
   border-radius: 12px;
@@ -262,7 +263,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 6px 20px rgba(11, 110, 105, 0.25);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
   position: relative;
@@ -276,7 +277,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
   transition: left 0.6s ease;
 }
 
@@ -286,7 +287,7 @@
 
 .mf-primary-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(11, 110, 105, 0.35);
+  box-shadow: 0 10px 28px rgba(2, 132, 199, 0.4);
 }
 
 .mf-primary-cta:active {
