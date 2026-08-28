@@ -427,17 +427,17 @@
   line-height: 1.4;
 }
 
-/* ── HOW IT WORKS (4-Step Horizontal Workflow) ─────────── */
+/* ── HOW IT WORKS (Ultra-Rich Detailed Step Cards) ──────── */
 .mf-ref-how-sec {
-  padding: 70px 60px;
+  padding: 80px 60px;
   max-width: 1440px;
   margin: 0 auto;
 }
 
 .mf-ref-how-grid {
   display: grid;
-  grid-template-columns: 4fr 8fr;
-  gap: 48px;
+  grid-template-columns: 3.5fr 8.5fr;
+  gap: 40px;
   align-items: center;
 }
 
@@ -456,7 +456,7 @@
 
 .mf-ref-how-h2 {
   font-family: 'Outfit', sans-serif;
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 800;
   color: #0F172A;
   line-height: 1.2;
@@ -464,7 +464,7 @@
 }
 
 .mf-ref-how-p {
-  font-size: 14px;
+  font-size: 14.5px;
   color: #64748B;
   line-height: 1.6;
   margin-bottom: 24px;
@@ -472,16 +472,16 @@
 
 .mf-ref-handwriting {
   font-family: 'Caveat', cursive;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
-  color: #475569;
+  color: #0D7A73;
 }
 
-/* 4 Step Process Cards Grid */
+/* 4 Step Cards Grid - Detailed & Interactive */
 .mf-ref-steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 18px;
   position: relative;
 }
 
@@ -489,28 +489,46 @@
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
   border-radius: 20px;
-  padding: 24px 18px;
+  padding: 22px 18px;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
   text-align: left;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .mf-ref-step-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-  border-color: #CBD5E1;
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+  border-color: #0D7A73;
 }
 
+.mf-step-top-bar {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+}
+
+.mf-step-top-bar.s1 { background: #16A34A; }
+.mf-step-top-bar.s2 { background: #9333EA; }
+.mf-step-top-bar.s3 { background: #2563EB; }
+.mf-step-top-bar.s4 { background: #E11D48; }
+
 .mf-ref-step-icon-box {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  margin-bottom: 16px;
+  font-size: 20px;
+  margin-bottom: 14px;
 }
 
 .mf-ref-step-icon-box.s1 { background: #DCFCE7; color: #16A34A; }
@@ -522,6 +540,7 @@
   font-size: 11px;
   font-weight: 800;
   color: #94A3B8;
+  letter-spacing: 0.5px;
   margin-bottom: 4px;
 }
 
@@ -530,13 +549,51 @@
   font-weight: 800;
   color: #0F172A;
   margin: 0 0 6px 0;
+  line-height: 1.3;
 }
 
 .mf-ref-step-desc {
   font-size: 12px;
   color: #64748B;
-  line-height: 1.4;
-  margin: 0;
+  line-height: 1.45;
+  margin: 0 0 14px 0;
+}
+
+/* Rich Preview Pill Box inside each Step Card */
+.mf-step-detail-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 11.5px;
+}
+
+.mf-step-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.mf-step-badge-tag {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 99px;
+  text-transform: uppercase;
+}
+
+.mf-step-badge-tag.tag1 { background: #DCFCE7; color: #15803D; }
+.mf-step-badge-tag.tag2 { background: #F3E8FF; color: #7E22CE; }
+.mf-step-badge-tag.tag3 { background: #DBEAFE; color: #1D4ED8; }
+.mf-step-badge-tag.tag4 { background: #FFE4E6; color: #BE123C; }
+
+.mf-step-detail-txt {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 600;
 }
 
 .mf-ref-arrow-next {
@@ -604,6 +661,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   transition: all 0.2s ease;
   text-align: left;
+  cursor: pointer;
 }
 
 .mf-ref-spec-card:hover {

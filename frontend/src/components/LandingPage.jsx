@@ -190,7 +190,7 @@ const LandingPage = ({ onGetStarted }) => {
         </div>
       </section>
 
-      {/* 4. HOW IT WORKS (4-Step Horizontal Workflow) */}
+      {/* 4. HOW IT WORKS (Ultra-Rich Detailed Step Cards) */}
       <section id="how-it-works" className="mf-ref-how-sec">
         <div className="mf-ref-how-grid">
           {/* Left Title */}
@@ -205,41 +205,81 @@ const LandingPage = ({ onGetStarted }) => {
             <div className="mf-ref-handwriting">Simple. Smart. Secure.</div>
           </div>
 
-          {/* Right 4 Horizontal Step Cards */}
+          {/* Right 4 Horizontal Step Cards with Rich Detail Boxes */}
           <div className="mf-ref-steps-grid">
-            {/* Step 1 */}
-            <div className="mf-ref-step-card">
-              <div className="mf-ref-step-icon-box s1">📄</div>
-              <div className="mf-ref-step-num">01</div>
-              <h3 className="mf-ref-step-h3">Tell Us Your Symptoms</h3>
-              <p className="mf-ref-step-desc">Enter your symptoms and basic details.</p>
+            {/* Step 01 */}
+            <div className="mf-ref-step-card" onClick={handleLoginClick}>
+              <div className="mf-step-top-bar s1" />
+              <div>
+                <div className="mf-ref-step-icon-box s1">📄</div>
+                <div className="mf-ref-step-num">01</div>
+                <h3 className="mf-ref-step-h3">Tell Us Your Symptoms</h3>
+                <p className="mf-ref-step-desc">Enter your symptoms and basic details online or via kiosk.</p>
+              </div>
+              <div className="mf-step-detail-box">
+                <div className="mf-step-detail-header">
+                  <span>Symptom Input</span>
+                  <span className="mf-step-badge-tag tag1">INSTANT</span>
+                </div>
+                <div className="mf-step-detail-txt">e.g. Fever, Cough, Chest Pain</div>
+              </div>
               <div className="mf-ref-arrow-next">→</div>
             </div>
 
-            {/* Step 2 */}
-            <div className="mf-ref-step-card">
-              <div className="mf-ref-step-icon-box s2">🧠</div>
-              <div className="mf-ref-step-num">02</div>
-              <h3 className="mf-ref-step-h3">AI Analysis</h3>
-              <p className="mf-ref-step-desc">Our AI identifies the most relevant medical specialty.</p>
+            {/* Step 02 */}
+            <div className="mf-ref-step-card" onClick={handleLoginClick}>
+              <div className="mf-step-top-bar s2" />
+              <div>
+                <div className="mf-ref-step-icon-box s2">🧠</div>
+                <div className="mf-ref-step-num">02</div>
+                <h3 className="mf-ref-step-h3">AI Analysis & Triage</h3>
+                <p className="mf-ref-step-desc">Our AI algorithm classifies urgency level from P1 to P5.</p>
+              </div>
+              <div className="mf-step-detail-box">
+                <div className="mf-step-detail-header">
+                  <span>AI ML Engine</span>
+                  <span className="mf-step-badge-tag tag2">&lt; 2s TRIAGE</span>
+                </div>
+                <div className="mf-step-detail-txt">P1 Emergency to P5 Routine</div>
+              </div>
               <div className="mf-ref-arrow-next">→</div>
             </div>
 
-            {/* Step 3 */}
-            <div className="mf-ref-step-card">
-              <div className="mf-ref-step-icon-box s3">👨‍⚕️</div>
-              <div className="mf-ref-step-num">03</div>
-              <h3 className="mf-ref-step-h3">Find Your Doctor</h3>
-              <p className="mf-ref-step-desc">See suitable doctors and availability.</p>
+            {/* Step 03 */}
+            <div className="mf-ref-step-card" onClick={handleLoginClick}>
+              <div className="mf-step-top-bar s3" />
+              <div>
+                <div className="mf-ref-step-icon-box s3">👨‍⚕️</div>
+                <div className="mf-ref-step-num">03</div>
+                <h3 className="mf-ref-step-h3">Find Your Doctor</h3>
+                <p className="mf-ref-step-desc">Matched with specialty doctor & active consultation room.</p>
+              </div>
+              <div className="mf-step-detail-box">
+                <div className="mf-step-detail-header">
+                  <span>Doctor Match</span>
+                  <span className="mf-step-badge-tag tag3">LIVE CABIN</span>
+                </div>
+                <div className="mf-step-detail-txt">Dr. Sharma • Cardiology Cabin 1</div>
+              </div>
               <div className="mf-ref-arrow-next">→</div>
             </div>
 
-            {/* Step 4 */}
-            <div className="mf-ref-step-card">
-              <div className="mf-ref-step-icon-box s4">🎫</div>
-              <div className="mf-ref-step-num">04</div>
-              <h3 className="mf-ref-step-h3">Join Queue</h3>
-              <p className="mf-ref-step-desc">Get a digital token and track your waiting time.</p>
+            {/* Step 04 */}
+            <div className="mf-ref-step-card" onClick={handleLoginClick}>
+              <div className="mf-step-top-bar s4" />
+              <div>
+                <div className="mf-ref-step-icon-box s4">🎫</div>
+                <div className="mf-ref-step-num">04</div>
+                <h3 className="mf-ref-step-h3">Join Queue & Track</h3>
+                <p className="mf-ref-step-desc">Get a digital token and monitor live ETA on your phone.</p>
+              </div>
+              <div className="mf-step-detail-box">
+                <div className="mf-step-detail-header">
+                  <span>Live Queue</span>
+                  <span className="mf-step-badge-tag tag4">#46 TOKEN</span>
+                </div>
+                <div className="mf-step-detail-txt">Serving #45 • Est. Wait: 12m</div>
+              </div>
             </div>
           </div>
         </div>
@@ -262,7 +302,7 @@ const LandingPage = ({ onGetStarted }) => {
 
           {/* Center 8 Specialties Cards */}
           <div className="mf-ref-spec-grid">
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#DBEAFE', color: '#2563EB' }}>🫁</div>
               <div>
                 <div className="mf-ref-spec-name">Pulmonology</div>
@@ -270,7 +310,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#FFE4E6', color: '#E11D48' }}>❤️</div>
               <div>
                 <div className="mf-ref-spec-name">Cardiology</div>
@@ -278,7 +318,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#DCFCE7', color: '#16A34A' }}>🩺</div>
               <div>
                 <div className="mf-ref-spec-name">Dermatology</div>
@@ -286,7 +326,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#F3E8FF', color: '#9333EA' }}>🧠</div>
               <div>
                 <div className="mf-ref-spec-name">Neurology</div>
@@ -294,7 +334,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#FEF3C7', color: '#D97706' }}>👂</div>
               <div>
                 <div className="mf-ref-spec-name">ENT</div>
@@ -302,7 +342,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#E0F2FE', color: '#0284C7' }}>🦴</div>
               <div>
                 <div className="mf-ref-spec-name">Orthopedics</div>
@@ -310,7 +350,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#FFEDD5', color: '#EA580C' }}>👶</div>
               <div>
                 <div className="mf-ref-spec-name">Pediatrics</div>
@@ -318,7 +358,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
             </div>
 
-            <div className="mf-ref-spec-card">
+            <div className="mf-ref-spec-card" onClick={handleLoginClick}>
               <div className="mf-ref-spec-icon" style={{ background: '#E0E7FF', color: '#4F46E5' }}>👁️</div>
               <div>
                 <div className="mf-ref-spec-name">Ophthalmology</div>
