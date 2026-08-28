@@ -82,6 +82,7 @@
 
 .mf-brand-title span.ai {
   background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-left: 4px;
