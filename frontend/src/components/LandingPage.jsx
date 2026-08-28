@@ -32,7 +32,7 @@ const LandingPage = ({ onGetStarted }) => {
           </div>
           <div>
             <div className="mf-ref-brand-title">
-              Smart<span>Hospital</span>
+              Medi<span>Flow</span> AI
             </div>
             <div className="mf-ref-brand-sub">AI Powered Queue & Patient Flow</div>
           </div>
@@ -370,10 +370,10 @@ const LandingPage = ({ onGetStarted }) => {
       <footer className="mf-ref-footer">
         <div className="mf-ref-footer-inner">
           <div className="mf-ref-footer-brand">
-            <div style={{ width: '28px', height: '28px', background: '#0D7A73', borderRadius: '8px', display: 'flex', flexItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '28px', height: '28px', background: '#0D7A73', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               +
             </div>
-            <span>SmartHospital</span>
+            <span>MediFlow AI</span>
           </div>
 
           <div className="mf-ref-footer-links">
@@ -385,7 +385,7 @@ const LandingPage = ({ onGetStarted }) => {
           </div>
 
           <div style={{ fontSize: '13px', color: '#64748B' }}>
-            © 2026 SmartHospital. All rights reserved.
+            © 2026 MediFlow AI. All rights reserved.
           </div>
         </div>
       </footer>
