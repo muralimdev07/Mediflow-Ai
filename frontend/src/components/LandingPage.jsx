@@ -120,7 +120,7 @@ const LandingPage = ({ onGetStarted }) => {
               </div>
 
               <img
-                src="/mediflow_hero_doctor_child.jpg"
+                src="/mediflow_hero_doctor_child_v2.jpg"
                 alt="Indian female doctor examining child patient"
                 className="mf-ref-hero-img"
               />
