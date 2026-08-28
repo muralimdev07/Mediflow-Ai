@@ -1,102 +1,155 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
 
-/* ── MediFlow Navbar Design System ──────────────────────── */
+/* ── MediFlow Ultra-Premium Healthcare Navbar Design System ── */
 :root {
-  --mf-primary: #0B6E69;
-  --mf-primary-hover: #085551;
-  --mf-primary-light: #E6F3F2;
-  --mf-text-dark: #16302E;
-  --mf-text-muted: #5F7875;
-  --mf-bg-light: #F7FAF9;
-  --mf-border: #E3ECEB;
-  --mf-white: #FFFFFF;
-  --mf-shadow: 0 4px 20px -2px rgba(11, 110, 105, 0.06);
-  --mf-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mf-teal-primary: #0B6E69;
+  --mf-teal-emerald: #10B981;
+  --mf-teal-dark: #074E4A;
+  --mf-teal-light: #F0FDF9;
+  --mf-teal-glow: rgba(11, 110, 105, 0.15);
+  
+  --mf-dark-text: #0F172A;
+  --mf-muted-text: #475569;
+  --mf-subtle-text: #64748B;
+  
+  --mf-border-light: rgba(226, 232, 240, 0.8);
+  --mf-border-teal: rgba(11, 110, 105, 0.12);
+  --mf-glass-bg: rgba(255, 255, 255, 0.88);
+  --mf-font-body: 'Plus Jakarta Sans', sans-serif;
+  --mf-font-heading: 'Outfit', sans-serif;
 }
 
+/* Base Wrapper with Top Healthcare Accent Bar & Glassmorphism */
 .mf-navbar-wrapper {
   width: 100%;
-  background-color: var(--mf-bg-light);
-  border-bottom: 1px solid var(--mf-border);
+  background: var(--mf-glass-bg);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--mf-border-teal);
   position: sticky;
   top: 0;
   z-index: 1000;
-  font-family: var(--mf-font);
-  box-sizing: border-box;
+  font-family: var(--mf-font-body);
+  transition: all 0.3s ease;
+}
+
+.mf-top-accent-line {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #0B6E69 0%, #10B981 50%, #6366F1 100%);
 }
 
 .mf-navbar-container {
-  max-width: 1400px;
-  height: 76px;
+  max-width: 1440px;
+  height: 78px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* ── Left Side: Logo ────────────────────────────────────── */
-.mf-logo-group {
+/* ── Brand Logo Design ──────────────────────────────────── */
+.mf-brand-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
 }
 
-.mf-logo-icon-wrapper {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, #0B6E69 0%, #14938D 100%);
-  border-radius: 12px;
+.mf-logo-badge {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--mf-teal-primary) 0%, var(--mf-teal-emerald) 100%);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(11, 110, 105, 0.2);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 16px var(--mf-teal-glow), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.mf-logo-group:hover .mf-logo-icon-wrapper {
-  transform: translateY(-1px);
+.mf-brand-group:hover .mf-logo-badge {
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
 }
 
-.mf-logo-text-box {
-  display: flex;
-  flex-direction: column;
+.mf-logo-pulse-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 17px;
+  border: 2px solid var(--mf-teal-emerald);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.mf-brand-group:hover .mf-logo-pulse-ring {
+  opacity: 0.4;
+  inset: -5px;
 }
 
 .mf-brand-title {
-  font-size: 22px;
+  font-family: var(--mf-font-heading);
+  font-size: 24px;
   font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1.1;
-  color: var(--mf-text-dark);
+  letter-spacing: -0.6px;
+  color: var(--mf-dark-text);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
-.mf-brand-title span {
-  color: var(--mf-primary);
+.mf-brand-title .highlight {
+  background: linear-gradient(135deg, #0B6E69 0%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.mf-brand-tagline {
+.mf-brand-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.mf-brand-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--mf-teal-primary);
+}
+
+.mf-ai-badge {
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--mf-text-muted);
-  margin-top: 2px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: var(--mf-teal-light);
+  color: var(--mf-teal-primary);
+  border: 1px solid rgba(11, 110, 105, 0.2);
 }
 
-/* ── Center Navigation Pill Container ───────────────────── */
-.mf-nav-pill-container {
-  background-color: var(--mf-white);
-  border: 1px solid var(--mf-border);
-  padding: 5px 6px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+/* ── Center Floating Navigation Bar ─────────────────────── */
+.mf-nav-floating-pill {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--mf-border-light);
+  padding: 6px 8px;
+  border-radius: 999px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: all 0.3s ease;
 }
 
-.mf-nav-menu {
+.mf-nav-floating-pill:hover {
+  border-color: var(--mf-border-teal);
+  box-shadow: 0 6px 24px rgba(11, 110, 105, 0.08);
+}
+
+.mf-nav-list {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -105,126 +158,189 @@
   padding: 0;
 }
 
-.mf-nav-link {
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--mf-text-muted);
-  padding: 8px 18px;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
+.mf-nav-item {
   position: relative;
 }
 
+.mf-nav-link {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mf-muted-text);
+  padding: 9px 20px;
+  border-radius: 999px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .mf-nav-link:hover {
-  color: var(--mf-text-dark);
-  background-color: var(--mf-bg-light);
+  color: var(--mf-dark-text);
+  background: rgba(240, 253, 249, 0.8);
 }
 
 /* Active State Design */
 .mf-nav-link.active {
-  color: var(--mf-primary);
-  font-weight: 600;
-  background-color: var(--mf-white);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--mf-border);
+  color: var(--mf-teal-primary);
+  font-weight: 700;
+  background: #FFFFFF;
+  box-shadow: 0 2px 10px rgba(11, 110, 105, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.mf-nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 2px;
-  background-color: var(--mf-primary);
-  border-radius: 2px;
+.mf-link-badge {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+  margin-left: 2px;
 }
 
-/* ── Right Side: CTA Button ─────────────────────────────── */
-.mf-actions-group {
+/* ── Right Action Controls ──────────────────────────────── */
+.mf-right-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
 }
 
-.mf-cta-button {
-  background-color: var(--mf-primary);
-  color: var(--mf-white);
+/* Live Triage Status Indicator */
+.mf-emergency-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #DC2626;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.mf-emergency-badge:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.mf-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #EF4444;
+  border-radius: 50%;
+  position: relative;
+}
+
+.mf-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background-color: #EF4444;
+  opacity: 0.6;
+  animation: mfPulse 1.8s infinite;
+}
+
+@keyframes mfPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Primary CTA Button */
+.mf-primary-cta {
+  background: linear-gradient(135deg, var(--mf-teal-primary) 0%, var(--mf-teal-dark) 100%);
+  color: #FFFFFF;
   font-size: 14px;
-  font-weight: 600;
-  padding: 10px 22px;
-  border-radius: 10px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 14px rgba(11, 110, 105, 0.22);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(11, 110, 105, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
 }
 
-.mf-cta-button:hover {
-  background-color: var(--mf-primary-hover);
-  box-shadow: 0 6px 18px rgba(11, 110, 105, 0.3);
-  transform: translateY(-1px);
+.mf-primary-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
-.mf-cta-button:active {
+.mf-primary-cta:hover::before {
+  left: 100%;
+}
+
+.mf-primary-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(11, 110, 105, 0.35);
+}
+
+.mf-primary-cta:active {
   transform: translateY(0);
 }
 
-.mf-status-dot {
-  width: 7px;
-  height: 7px;
-  background-color: #34D399;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.3);
-  display: inline-block;
+.mf-cta-arrow {
+  transition: transform 0.2s ease;
 }
 
-/* ── Mobile Hamburger Menu Toggle ───────────────────────── */
-.mf-mobile-toggle {
+.mf-primary-cta:hover .mf-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* ── Mobile Controls & Drawer ───────────────────────────── */
+.mf-hamburger-btn {
   display: none;
-  background: transparent;
-  border: 1px solid var(--mf-border);
-  border-radius: 8px;
-  padding: 8px;
+  background: var(--mf-white);
+  border: 1px solid var(--mf-border-light);
+  border-radius: 10px;
+  padding: 9px;
   cursor: pointer;
-  color: var(--mf-text-dark);
+  color: var(--mf-dark-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-/* ── Mobile Drawer ──────────────────────────────────────── */
-.mf-mobile-menu {
+.mf-mobile-drawer {
   display: none;
 }
 
-@media (max-width: 1024px) {
-  .mf-nav-pill-container {
+@media (max-width: 1080px) {
+  .mf-nav-floating-pill, .mf-emergency-badge {
     display: none;
   }
-  
-  .mf-mobile-toggle {
+
+  .mf-hamburger-btn {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .mf-mobile-menu.open {
+  .mf-mobile-drawer.active {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 16px 24px;
-    background-color: var(--mf-white);
-    border-bottom: 1px solid var(--mf-border);
+    gap: 10px;
+    padding: 20px 28px;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--mf-border-teal);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   }
 
-  .mf-mobile-menu .mf-nav-link {
+  .mf-mobile-drawer .mf-nav-link {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 10px;
+    padding: 12px 16px;
   }
 }
