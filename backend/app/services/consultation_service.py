@@ -134,7 +134,12 @@ class ConsultationService:
         return query.order_by(Consultation.started_at.desc()).all()
 
     def get_patient_history(self, patient_id: str) -> List[dict]:
-        """Get patient's visit and consultation history."""
+        """Get patient's comprehensive visit and consultation history with prescriptions."""
+        from app.models.user import User
+        from app.models.doctor import DoctorProfile, DoctorSpecialty
+        from app.models.queue import QueueEntry
+        from app.models.triage import TriageAssessment
+
         visits = self.db.query(PatientVisit).filter(
             PatientVisit.patient_id == patient_id,
         ).order_by(PatientVisit.check_in_time.desc()).all()
@@ -145,16 +150,51 @@ class ConsultationService:
                 Consultation.visit_id == visit.id
             ).first()
 
+            queue_entry = self.db.query(QueueEntry).filter(
+                QueueEntry.visit_id == visit.id
+            ).first()
+
+            token = None
+            if queue_entry and queue_entry.department:
+                token = f"{queue_entry.department.code}-{str(queue_entry.queue_position or 1).zfill(3)}"
+
             entry = {
+                "id": visit.id,
                 "visit_id": visit.id,
+                "token": token,
                 "chief_complaint": visit.chief_complaint,
+                "symptoms_description": visit.symptoms_description,
                 "status": visit.status,
                 "check_in_time": visit.check_in_time,
                 "discharge_time": visit.discharge_time,
+                "created_at": visit.created_at,
                 "consultation": None,
+                "diagnosis": None,
+                "prescriptions": [],
+                "doctor": None,
             }
 
             if consultation:
+                doctor_user = self.db.query(User).filter(User.id == consultation.doctor_id).first()
+                doctor_profile = self.db.query(DoctorProfile).filter(DoctorProfile.user_id == consultation.doctor_id).first() if doctor_user else None
+                
+                dept_name = "General Medicine"
+                if doctor_profile:
+                    specialty = self.db.query(DoctorSpecialty).filter(DoctorSpecialty.doctor_id == doctor_profile.id, DoctorSpecialty.is_primary == True).first()  # noqa: E712
+                    if specialty and specialty.department:
+                        dept_name = specialty.department.name
+
+                doctor_info = {
+                    "id": doctor_user.id if doctor_user else consultation.doctor_id,
+                    "name": doctor_user.full_name if doctor_user else "Attending Physician",
+                    "email": doctor_user.email if doctor_user else "",
+                    "avatar_url": doctor_user.avatar_url if doctor_user else None,
+                    "specialization": f"{dept_name} Specialist",
+                    "department": dept_name,
+                    "hospital_name": doctor_profile.hospital_name if doctor_profile else "MediFlow Smart Hospital",
+                    "consultation_room": doctor_profile.consultation_room if doctor_profile else "Room 101",
+                }
+
                 prescriptions = self.db.query(Prescription).filter(
                     Prescription.consultation_id == consultation.id
                 ).all()
@@ -162,35 +202,70 @@ class ConsultationService:
                     VitalsRecord.consultation_id == consultation.id
                 ).all()
 
+                prescriptions_list = [
+                    {
+                        "id": p.id,
+                        "medication_name": p.medication_name,
+                        "dosage": p.dosage,
+                        "frequency": p.frequency,
+                        "duration_days": p.duration_days,
+                        "instructions": p.instructions,
+                        "created_at": p.created_at,
+                    }
+                    for p in prescriptions
+                ]
+
+                entry["diagnosis"] = consultation.diagnosis
+                entry["prescriptions"] = prescriptions_list
+                entry["doctor"] = doctor_info
+
+                triage_rec = self.db.query(TriageAssessment).filter(TriageAssessment.visit_id == visit.id).first()
+                triage_vitals = triage_rec.vitals if triage_rec else None
+
+                vitals_list = [
+                    {
+                        "temperature": v.temperature,
+                        "heart_rate": v.heart_rate,
+                        "blood_pressure": v.blood_pressure,
+                        "blood_pressure_systolic": v.blood_pressure_systolic,
+                        "blood_pressure_diastolic": v.blood_pressure_diastolic,
+                        "oxygen_saturation": v.oxygen_saturation,
+                        "weight": v.weight,
+                        "height": v.height,
+                        "recorded_at": v.recorded_at,
+                    }
+                    for v in vitals
+                ]
+
+                # Fallback to triage vitals if vitals_records empty
+                if not vitals_list and triage_vitals:
+                    vitals_list = [triage_vitals]
+
+                entry["vitals"] = vitals_list[0] if vitals_list else None
+                entry["nurse_notes"] = triage_rec.nurse_notes if triage_rec else ""
+                entry["triage_level"] = triage_rec.triage_level if triage_rec else "P3"
+
                 entry["consultation"] = {
                     "id": consultation.id,
                     "diagnosis": consultation.diagnosis,
                     "clinical_notes": consultation.clinical_notes,
                     "treatment_plan": consultation.treatment_plan,
-                    "doctor_id": consultation.doctor_id,
+                    "follow_up_notes": consultation.follow_up_notes,
+                    "doctor": doctor_info,
                     "started_at": consultation.started_at,
                     "ended_at": consultation.ended_at,
-                    "prescriptions": [
-                        {
-                            "medication_name": p.medication_name,
-                            "dosage": p.dosage,
-                            "frequency": p.frequency,
-                            "duration_days": p.duration_days,
-                            "instructions": p.instructions,
-                        }
-                        for p in prescriptions
-                    ],
-                    "vitals": [
-                        {
-                            "temperature": v.temperature,
-                            "heart_rate": v.heart_rate,
-                            "blood_pressure": v.blood_pressure,
-                            "oxygen_saturation": v.oxygen_saturation,
-                            "recorded_at": v.recorded_at,
-                        }
-                        for v in vitals
-                    ],
+                    "prescriptions": prescriptions_list,
+                    "vitals": vitals_list,
+                    "nurse_notes": triage_rec.nurse_notes if triage_rec else "",
                 }
+            else:
+                # If no consultation yet, check if triage exists
+                from app.models.triage import TriageAssessment
+                triage_rec = self.db.query(TriageAssessment).filter(TriageAssessment.visit_id == visit.id).first()
+                if triage_rec:
+                    entry["vitals"] = triage_rec.vitals
+                    entry["nurse_notes"] = triage_rec.nurse_notes
+                    entry["triage_level"] = triage_rec.triage_level
 
             history.append(entry)
 

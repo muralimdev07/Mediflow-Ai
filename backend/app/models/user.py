@@ -21,6 +21,7 @@ class User(Base):
     google_id = Column(String(255), unique=True, nullable=True, index=True)
     full_name = Column(String(255), nullable=False)
     avatar_url = Column(String(512), nullable=True)
+    password_hash = Column(String(255), nullable=True)
     role = Column(
         Enum("patient", "nurse", "doctor", "admin", "super_admin", "pending", name="user_role"),
         nullable=False,

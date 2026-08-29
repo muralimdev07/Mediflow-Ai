@@ -22,7 +22,12 @@ from app.routers.endpoints import (
     rooms_router,
     analytics_router,
     health_router,
+    doctors_router,
+    patient_router,
+    appointments_router,
 )
+from app.routers.doctor import doctor_router
+from app.routers.nurse import router as nurse_router
 from app.websocket import ws_manager
 
 settings = get_settings()
@@ -46,6 +51,8 @@ def create_app() -> FastAPI:
     api_prefix = "/api/v1"
     app.include_router(auth_router, prefix=api_prefix)
     app.include_router(users_router, prefix=api_prefix)
+    app.include_router(doctor_router, prefix=api_prefix)
+    app.include_router(nurse_router, prefix=api_prefix)
     app.include_router(queue_router, prefix=api_prefix)
     app.include_router(visits_router, prefix=api_prefix)
     app.include_router(triage_router, prefix=api_prefix)
@@ -57,6 +64,9 @@ def create_app() -> FastAPI:
     app.include_router(rooms_router, prefix=api_prefix)
     app.include_router(analytics_router, prefix=api_prefix)
     app.include_router(health_router, prefix=api_prefix)
+    app.include_router(doctors_router, prefix=api_prefix)
+    app.include_router(patient_router, prefix=api_prefix)
+    app.include_router(appointments_router, prefix=api_prefix)
 
     # WebSocket endpoint
     @app.websocket("/ws/{user_id}")

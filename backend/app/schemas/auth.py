@@ -10,6 +10,12 @@ class GoogleAuthRequest(BaseModel):
     redirect_uri: Optional[str] = None
 
 
+class DoctorLoginRequest(BaseModel):
+    """Doctor credential login request."""
+    email: EmailStr
+    password: str
+
+
 class TokenResponse(BaseModel):
     """JWT token pair response."""
     access_token: str

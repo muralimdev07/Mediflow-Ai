@@ -1,25 +1,41 @@
-﻿import React, { useState, useEffect, useCallback } from "react";
-import { Card } from "../../components/ui/Card";
-import { Badge } from "../../components/ui/Badge";
+import React, { useState, useEffect, useCallback } from "react";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import api from "../../services/api";
-import { Clock, Users, Activity, Stethoscope, Calendar, Zap, RefreshCw } from "lucide-react";
+import { Clock, Users, Activity, Stethoscope, Calendar, Zap, RefreshCw, CheckCircle2 } from "lucide-react";
 
-const useCountdown = (targetMinutes) => {
-  const [remaining, setRemaining] = useState(targetMinutes * 60);
+const useCountdown = (targetMinutes, enteredAt) => {
+  const [remaining, setRemaining] = useState(() => {
+    if (enteredAt) {
+      const elapsed = Math.floor((Date.now() - new Date(enteredAt).getTime()) / 1000);
+      const totalSecs = (targetMinutes || 10) * 60;
+      return Math.max(0, totalSecs - Math.max(0, elapsed));
+    }
+    return (targetMinutes || 10) * 60;
+  });
+
   useEffect(() => {
-    setRemaining(targetMinutes * 60);
+    if (enteredAt) {
+      const elapsed = Math.floor((Date.now() - new Date(enteredAt).getTime()) / 1000);
+      const totalSecs = (targetMinutes || 10) * 60;
+      setRemaining(Math.max(0, totalSecs - Math.max(0, elapsed)));
+    } else {
+      setRemaining(prev => prev > 0 ? prev : (targetMinutes || 10) * 60);
+    }
+  }, [targetMinutes, enteredAt]);
+
+  useEffect(() => {
     const id = setInterval(() => setRemaining(r => Math.max(0, r - 1)), 1000);
     return () => clearInterval(id);
-  }, [targetMinutes]);
+  }, []);
+
   const mins = Math.floor(remaining / 60);
   const secs = remaining % 60;
   return `${mins}m ${secs.toString().padStart(2, "0")}s`;
 };
 
-const LiveTimer = ({ minutes }) => {
-  const time = useCountdown(minutes || 0);
-  return <span className="font-mono text-orange-300 font-black">{time}</span>;
+const LiveTimer = ({ minutes, enteredAt }) => {
+  const time = useCountdown(minutes || 0, enteredAt);
+  return <span className="font-mono text-[#D97706] font-black text-lg">{time}</span>;
 };
 
 export const QueuePage = () => {
@@ -53,10 +69,10 @@ export const QueuePage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-12">
+      <div className="flex items-center justify-center p-16">
         <div className="flex items-center gap-3 text-slate-400">
-          <span className="w-5 h-5 border-2 border-slate-500 border-t-primary-light rounded-full animate-spin" />
-          Loading live queue...
+          <span className="w-5 h-5 border-2 border-slate-300 border-t-[#5046E5] rounded-full animate-spin" />
+          <span className="text-xs font-bold text-slate-500">Loading live queue...</span>
         </div>
       </div>
     );
@@ -64,164 +80,231 @@ export const QueuePage = () => {
 
   if (!activeQueue) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-slate-100">Live Queue</h1>
-        <Card title="No Active Queue" subtitle="You are not currently in any queue.">
-          <div className="p-8 flex flex-col items-center gap-3 text-slate-400">
-            <div className="p-4 rounded-full bg-surface-hover">
-              <Users className="w-10 h-10" />
-            </div>
-            <p className="text-sm">Start a check-in from the Appointments page to join the queue.</p>
+      <div className="space-y-6 max-w-5xl mx-auto pb-12 font-sans">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-black text-[#1E293B] tracking-tight">Live Queue Status</h1>
+            <p className="text-xs text-slate-400 font-medium">Real-time hospital consultation queue tracker</p>
           </div>
-        </Card>
+        </div>
+
+        <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-4">
+          <div className="w-16 h-16 rounded-3xl bg-[#EEF2FF] text-[#5046E5] flex items-center justify-center mx-auto shadow-sm">
+            <Users className="w-8 h-8 stroke-[2]" />
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-[#1E293B]">No Active Queue</h3>
+            <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto font-medium">
+              You are not currently in any waiting room queue. Book an appointment or check in to get your live token.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
   const position = activeQueue.queue_position || 1;
-  const ahead = Math.max(0, position - 1);
-  const myToken = activeQueue.token || `A-${String(position).padStart(2, "0")}`;
-  const currentToken = "A-01";
-  const estWait = activeQueue.estimated_wait_minutes ?? ahead * 15;
-  const displayCount = Math.min(position + 1, 6);
-  const queueList = [];
-  for (let i = 1; i <= displayCount; i++) {
-    queueList.push({
-      token: `A-${String(i).padStart(2, "0")}`,
-      status: i === 1 ? "IN CONSULTATION" : i < position ? "WAITING" : i === position ? "MY SPOT" : "NEXT",
-      isMe: i === position,
-      isCurrent: i === 1,
-    });
-  }
+  const ahead = activeQueue.patients_ahead !== undefined ? activeQueue.patients_ahead : Math.max(0, position - 1);
+  const myToken = activeQueue.token || `A-${String(position).padStart(3, "0")}`;
+  const currentToken = activeQueue.currently_serving_token || "A-001";
+  const estWait = activeQueue.estimated_wait_minutes ?? ahead * 12;
 
-  const statusColor = {
-    waiting: "bg-amber-500/20 border-amber-500/40 text-amber-300",
-    called: "bg-green-500/20 border-green-500/40 text-green-300",
-    in_progress: "bg-blue-500/20 border-blue-500/40 text-blue-300",
-  }[activeQueue.status] || "bg-slate-500/20 border-slate-500/40 text-slate-300";
+  const queueList = activeQueue.queue_list && activeQueue.queue_list.length > 0
+    ? activeQueue.queue_list
+    : [
+      { token: currentToken, status: "IN CONSULTATION", isCurrent: true, isMe: myToken === currentToken },
+      { token: myToken, status: activeQueue.status?.toUpperCase() || "WAITING", isCurrent: false, isMe: true },
+    ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 max-w-6xl mx-auto pb-12 font-sans animate-fade-in">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Live Queue</h1>
-          <p className="text-sm text-slate-400">
-            Department: <span className="text-primary-light font-semibold">{activeQueue.department_name || "General"}</span>
-            {lastUpdated && <span className="ml-3 text-slate-500">· Updated {lastUpdated.toLocaleTimeString()}</span>}
+          <h1 className="text-2xl font-black text-[#1E293B] tracking-tight">Live Queue Status</h1>
+          <p className="text-xs text-slate-400 font-medium">
+            Department: <span className="text-[#5046E5] font-black">{activeQueue.department_name || "General Medicine"}</span>
+            {lastUpdated && <span className="ml-2 text-slate-400">· Updated {lastUpdated.toLocaleTimeString()}</span>}
           </p>
         </div>
-        <button onClick={fetchQueue} className="flex items-center gap-2 px-3 py-2 rounded-lg border border-surface-border/40 text-slate-400 hover:text-slate-200 hover:border-slate-500 transition-all text-xs font-semibold">
-          <RefreshCw className="w-3.5 h-3.5" /> Refresh
+        <button
+          onClick={fetchQueue}
+          className="self-start sm:self-auto flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white border border-slate-200/80 text-slate-700 hover:bg-slate-50 transition-all text-xs font-bold shadow-xs cursor-pointer"
+        >
+          <RefreshCw className="w-3.5 h-3.5 text-slate-500" /> Refresh Queue
         </button>
       </div>
 
-      {(activeQueue.scheduled_date || activeQueue.scheduled_time_slot) && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-teal-500/10 border border-teal-500/20">
-          <Calendar className="w-5 h-5 text-teal-400 flex-shrink-0" />
-          <div>
-            <p className="text-sm font-bold text-teal-300">Scheduled Appointment</p>
-            <p className="text-xs text-teal-400">
-              {activeQueue.scheduled_date}{activeQueue.scheduled_time_slot && ` at ${activeQueue.scheduled_time_slot}`}
-            </p>
-          </div>
-          <div className="ml-auto">
-            <span className={`px-3 py-1 rounded-full border text-xs font-bold ${statusColor}`}>{activeQueue.status?.toUpperCase()}</span>
-          </div>
-        </div>
-      )}
-
-      {activeQueue.assigned_doctor_name && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-800/50 border border-slate-700">
-          <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-            <Stethoscope className="w-5 h-5 text-primary-light" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Assigned Doctor</p>
-            <p className="font-bold text-slate-100">{activeQueue.assigned_doctor_name}</p>
-          </div>
-          <div className="ml-auto flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs text-green-400 font-semibold">Available</span>
-          </div>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-surface-card to-primary/10 border-primary/30">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
-              <Activity className="text-primary-light w-5 h-5" /> Current Status
-            </h2>
-            <Badge variant={activeQueue.status === "waiting" ? "warning" : "success"}>
-              {activeQueue.status?.toUpperCase() || "WAITING"}
-            </Badge>
-          </div>
-          <div className="grid grid-cols-2 gap-4 text-center mb-6">
-            <div className="p-4 bg-surface/50 rounded-xl border border-surface-border/50">
-              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">Currently Serving</p>
-              <p className="text-3xl font-black text-slate-100">{currentToken}</p>
+      {/* Appointment & Assigned Doctor Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {(activeQueue.scheduled_date || activeQueue.scheduled_time_slot) && (
+          <div className="flex items-center gap-3.5 p-4 rounded-3xl bg-white border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="w-12 h-12 rounded-2xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center shrink-0">
+              <Calendar className="w-6 h-6 stroke-[2]" />
             </div>
-            <div className="p-4 bg-primary/20 rounded-xl border border-primary/30 relative overflow-hidden">
-              <div className="absolute inset-0 bg-primary/5 animate-pulse rounded-xl" />
-              <p className="text-xs text-primary-light uppercase tracking-wider font-semibold mb-1 relative">Your Token</p>
-              <p className="text-3xl font-black text-primary-light relative">{myToken}</p>
-            </div>
-          </div>
-          {estWait > 0 && (
-            <div className="mb-4 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 text-center">
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                <Zap className="w-3 h-3 inline mr-1" />Live Countdown
+            <div>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Scheduled Time</p>
+              <p className="text-xs font-black text-[#1E293B]">
+                {activeQueue.scheduled_date} {activeQueue.scheduled_time_slot && `• ${activeQueue.scheduled_time_slot}`}
               </p>
-              <LiveTimer minutes={estWait} />
+            </div>
+            <div className="ml-auto">
+              <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-[#FFFBEB] text-[#D97706] border border-amber-200">
+                {activeQueue.status || 'WAITING'}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {activeQueue.assigned_doctor_name && (
+          <div className="flex items-center gap-3.5 p-4 rounded-3xl bg-white border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+            <div className="w-12 h-12 rounded-2xl bg-[#FAF5FF] text-[#9333EA] flex items-center justify-center shrink-0">
+              <Stethoscope className="w-6 h-6 stroke-[2]" />
+            </div>
+            <div>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Assigned Doctor</p>
+              <p className="text-xs font-black text-[#1E293B]">{activeQueue.assigned_doctor_name}</p>
+            </div>
+            <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E6FAF5] text-[#05CD99]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#05CD99] animate-pulse" />
+              <span className="text-[10px] font-extrabold">In Clinic</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Main 2-Column Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        
+        {/* Token Details & Countdown */}
+        <div className="md:col-span-6 bg-white rounded-3xl p-7 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <h2 className="text-sm font-black text-[#1E293B] flex items-center gap-2">
+              <Activity className="w-4 h-4 text-[#5046E5]" /> Current Queue Position
+            </h2>
+            <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase bg-[#EEF2FF] text-[#5046E5]">
+              Position #{position}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-slate-100">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-extrabold mb-1">Serving Token</p>
+              <p className="text-2xl font-black text-[#1E293B]">{currentToken}</p>
+            </div>
+            <div className="p-4 bg-[#EEF2FF] rounded-2xl border border-indigo-100">
+              <p className="text-[10px] text-[#5046E5] uppercase tracking-wider font-black mb-1">Your Token</p>
+              <p className="text-2xl font-black text-[#5046E5]">{myToken}</p>
+            </div>
+          </div>
+
+          {estWait > 0 && (
+            <div className="p-4 rounded-2xl bg-[#FFFBEB] border border-amber-200 text-center space-y-1">
+              <p className="text-[10px] font-extrabold text-amber-800 uppercase tracking-wider flex items-center justify-center gap-1">
+                <Zap className="w-3.5 h-3.5 text-[#D97706]" /> Live Estimated Countdown
+              </p>
+              <LiveTimer minutes={estWait} enteredAt={activeQueue.entered_at} />
             </div>
           )}
-          <div className="flex justify-between items-center px-4 py-3 bg-surface/40 rounded-xl border border-surface-border/30">
-            <div className="flex items-center gap-3">
-              <Users className="text-slate-400 w-5 h-5" />
-              <div>
-                <p className="text-sm font-bold text-slate-100">{ahead}</p>
-                <p className="text-xs text-slate-400">Patients Ahead</p>
-              </div>
-            </div>
-            <div className="h-8 w-px bg-surface-border/50" />
-            <div className="flex items-center gap-3">
-              <Clock className="text-slate-400 w-5 h-5" />
-              <div>
-                <p className="text-sm font-bold text-slate-100">~{estWait} mins</p>
-                <p className="text-xs text-slate-400">Est. Wait</p>
-              </div>
-            </div>
-          </div>
-        </Card>
 
-        <Card title="Queue Order" subtitle="Live position updates">
-          <div className="mb-4">
-            <div className="flex justify-between text-xs text-slate-400 mb-1.5">
-              <span>Queue Progress</span>
-              <span>Position {position}</span>
+          <div className="grid grid-cols-2 gap-4 p-4 rounded-2xl bg-[#F8FAFC] border border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white text-slate-500 flex items-center justify-center shadow-xs">
+                <Users className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-black text-[#1E293B]">{ahead}</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase">Ahead of You</p>
+              </div>
             </div>
-            <div className="h-2 bg-surface/50 rounded-full overflow-hidden border border-surface-border/30">
-              <div className="h-full bg-gradient-to-r from-primary to-teal-400 rounded-full transition-all duration-1000"
-                style={{ width: `${Math.max(10, 100 - (ahead / Math.max(ahead + 1, 1)) * 100)}%` }} />
+            <div className="flex items-center gap-3 border-l border-slate-200/60 pl-4">
+              <div className="w-10 h-10 rounded-xl bg-white text-slate-500 flex items-center justify-center shadow-xs">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-sm font-black text-[#1E293B]">~{estWait} mins</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase">Est. Wait Time</p>
+              </div>
             </div>
           </div>
-          <div className="space-y-2 mt-4">
+        </div>
+
+        {/* Live Token Progression List */}
+        <div className="md:col-span-6 bg-white rounded-3xl p-7 border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] space-y-5">
+          <div>
+            <div className="flex justify-between text-xs font-bold text-slate-400 mb-2">
+              <span>Queue Progression</span>
+              <span className="text-[#5046E5] font-black">{Math.max(10, 100 - (ahead / Math.max(ahead + 1, 1)) * 100).toFixed(0)}% Ready</span>
+            </div>
+            <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#5046E5] to-[#05CD99] rounded-full transition-all duration-1000"
+                style={{ width: `${Math.max(10, 100 - (ahead / Math.max(ahead + 1, 1)) * 100)}%` }}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2.5 pt-2">
             {queueList.map((item, idx) => (
-              <div key={idx} className={`flex justify-between items-center p-3 rounded-lg border transition-all ${
-                item.isMe ? "bg-primary/20 border-primary/40 shadow-lg shadow-primary/10"
-                : item.isCurrent ? "bg-green-500/10 border-green-500/30"
-                : "bg-surface/30 border-surface-border/30"}`}>
+              <div
+                key={idx}
+                className={`flex justify-between items-center p-3.5 rounded-2xl border transition-all ${
+                  item.isMe
+                    ? "bg-[#EEF2FF] border-indigo-200 shadow-xs ring-1 ring-indigo-300/60"
+                    : item.isCurrent
+                    ? "bg-[#E6FAF5] border-emerald-200 ring-1 ring-emerald-300/40"
+                    : item.is_ahead
+                    ? "bg-amber-50/50 border-amber-100/80"
+                    : "bg-[#F8FAFC] border-slate-100"
+                }`}
+              >
                 <div className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${item.isCurrent ? "bg-green-400 animate-pulse" : item.isMe ? "bg-primary-light animate-pulse" : "bg-slate-600"}`} />
-                  <span className={`font-bold ${item.isMe ? "text-primary-light" : item.isCurrent ? "text-green-300" : "text-slate-400"}`}>{item.token}</span>
-                  {item.isMe && <Badge variant="primary" className="ml-1 text-[10px] py-0">YOU</Badge>}
+                  <div className={`w-2.5 h-2.5 rounded-full ${item.isCurrent ? "bg-[#05CD99] animate-ping" : item.isMe ? "bg-[#5046E5]" : item.is_ahead ? "bg-amber-400" : "bg-slate-300"}`} />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className={`text-xs font-black font-mono ${item.isMe ? "text-[#5046E5]" : item.isCurrent ? "text-[#05CD99]" : "text-slate-700"}`}>
+                        {item.token}
+                      </span>
+                      {item.isMe && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#5046E5] text-white uppercase tracking-wider">
+                          YOU
+                        </span>
+                      )}
+                      {item.isCurrent && !item.isMe && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-[#05CD99] text-white uppercase tracking-wider">
+                          IN ROOM
+                        </span>
+                      )}
+                      {item.is_ahead && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-100 text-amber-700">
+                          Ahead of You
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                      {item.label || (item.isMe ? "Your consultation turn" : item.isCurrent ? "Currently in doctor's cabin" : "Waiting in queue")}
+                    </p>
+                  </div>
                 </div>
-                <span className={`text-xs font-semibold ${item.isCurrent ? "text-green-400" : item.isMe ? "text-primary-light" : "text-slate-500"}`}>{item.status}</span>
+                <div className="text-right">
+                  <span className={`text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full ${
+                    item.isCurrent
+                      ? "bg-[#05CD99] text-white font-black"
+                      : item.isMe
+                      ? "bg-[#5046E5] text-white font-black"
+                      : item.is_ahead
+                      ? "bg-amber-100 text-amber-800 font-bold"
+                      : "bg-slate-100 text-slate-500 font-medium"
+                  }`}>
+                    {item.status}
+                  </span>
+                </div>
               </div>
             ))}
-            {position > displayCount && <p className="text-center text-xs text-slate-500 pt-1">+{position - displayCount} more in queue</p>}
           </div>
-        </Card>
+        </div>
+
       </div>
     </div>
   );

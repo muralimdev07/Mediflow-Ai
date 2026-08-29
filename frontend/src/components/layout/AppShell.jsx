@@ -5,11 +5,11 @@ import { ToastContainer } from '../ui/ToastContainer';
 
 export const AppShell = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-surface text-slate-100">
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-slate-900 font-sans">
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 p-6 overflow-y-auto max-w-7xl mx-auto w-full animate-fade-in">
+        <main className="flex-1 p-6 sm:p-8 overflow-y-auto w-full bg-[#F8FAFC]">
           {children}
         </main>
       </div>

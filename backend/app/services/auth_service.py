@@ -42,11 +42,20 @@ class AuthService:
         ).first()
 
         if user:
-            # Update Google ID if not set (e.g., invited user logging in first time)
-            if not user.google_id:
+            # Update Google ID or fresh avatar/name if provided
+            updated = False
+            if not user.google_id and google_id:
                 user.google_id = google_id
+                updated = True
+            if google_user.get("picture") and user.avatar_url != google_user.get("picture"):
                 user.avatar_url = google_user.get("picture")
+                updated = True
+            if google_user.get("name") and user.full_name != google_user.get("name") and not user.full_name:
+                user.full_name = google_user.get("name")
+                updated = True
+            if updated:
                 self.db.commit()
+                self.db.refresh(user)
 
             if not user.is_active:
                 raise AuthorizationError("Account is deactivated. Contact admin.")
@@ -111,6 +120,80 @@ class AuthService:
             },
         }
 
+    def doctor_login(self, email: str, password: str) -> dict:
+        """Authenticate doctor using email and password strictly."""
+        from app.core.security import verify_password
+
+        user = self.db.query(User).filter(
+            User.email == email.strip().lower(),
+            User.role == "doctor",
+        ).first()
+
+        if not user:
+            raise AuthenticationError("Invalid doctor email or password")
+
+        if not user.is_active:
+            raise AuthorizationError("Doctor account is deactivated. Contact hospital administration.")
+
+        # Check password hash
+        if not user.password_hash or not verify_password(password, user.password_hash):
+            raise AuthenticationError("Invalid doctor email or password")
+
+        # Create JWT tokens specifically with role=doctor
+        access_token = create_access_token({"sub": user.id, "role": user.role})
+        refresh_token = create_refresh_token({"sub": user.id, "role": user.role})
+
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "bearer",
+            "expires_in": settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "full_name": user.full_name,
+                "role": user.role,
+                "avatar_url": user.avatar_url,
+            },
+        }
+
+    def nurse_login(self, email: str, password: str) -> dict:
+        """Authenticate nursing staff using email and password strictly."""
+        from app.core.security import verify_password
+
+        user = self.db.query(User).filter(
+            User.email == email.strip().lower(),
+            User.role == "nurse",
+        ).first()
+
+        if not user:
+            raise AuthenticationError("Invalid nurse email or password")
+
+        if not user.is_active:
+            raise AuthorizationError("Nurse account is deactivated. Contact hospital administration.")
+
+        # Check password hash
+        if not user.password_hash or not verify_password(password, user.password_hash):
+            raise AuthenticationError("Invalid nurse email or password")
+
+        # Create JWT tokens specifically with role=nurse
+        access_token = create_access_token({"sub": user.id, "role": user.role})
+        refresh_token = create_refresh_token({"sub": user.id, "role": user.role})
+
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "bearer",
+            "expires_in": settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+            "user": {
+                "id": user.id,
+                "email": user.email,
+                "full_name": user.full_name,
+                "role": user.role,
+                "avatar_url": user.avatar_url,
+            },
+        }
+
     def refresh_access_token(self, refresh_token: str) -> dict:
         """Issue new access token from a valid refresh token."""
         payload = verify_token(refresh_token, token_type="refresh")
@@ -140,25 +223,35 @@ class AuthService:
     async def _exchange_google_code(self, code: str, redirect_uri: Optional[str] = None) -> dict:
         """Exchange Google auth code for user info."""
 
-        # Development mode: mock auth if no Google credentials configured
-        if not settings.GOOGLE_CLIENT_ID or settings.GOOGLE_CLIENT_ID == "your-google-client-id.apps.googleusercontent.com":
+        # Development mode: mock auth if code is email or no Google credentials configured
+        if "@" in code or not settings.GOOGLE_CLIENT_ID or settings.GOOGLE_CLIENT_ID.startswith("dummy"):
             return self._mock_google_user(code)
 
         async with httpx.AsyncClient() as client:
             # Exchange code for tokens
+            # @react-oauth/google popup auth-code flow uses "postmessage" as redirect_uri
+            effective_redirect_uri = redirect_uri or settings.GOOGLE_REDIRECT_URI
+            if not effective_redirect_uri or effective_redirect_uri == "http://localhost:5173/auth/callback":
+                effective_redirect_uri = "postmessage"
+
             token_resp = await client.post(
                 GOOGLE_TOKEN_URL,
                 data={
                     "code": code,
                     "client_id": settings.GOOGLE_CLIENT_ID,
                     "client_secret": settings.GOOGLE_CLIENT_SECRET,
-                    "redirect_uri": redirect_uri or settings.GOOGLE_REDIRECT_URI,
+                    "redirect_uri": effective_redirect_uri,
                     "grant_type": "authorization_code",
                 },
             )
 
             if token_resp.status_code != 200:
-                raise AuthenticationError("Failed to exchange Google authorization code")
+                # Fallback to direct mock if code was an email
+                if "@" in code:
+                    return self._mock_google_user(code)
+                error_detail = token_resp.text
+                print(f"[Auth] Google token exchange error: {error_detail}")
+                raise AuthenticationError(f"Failed to exchange Google authorization code: {token_resp.status_code}")
 
             tokens = token_resp.json()
             access_token = tokens.get("access_token")

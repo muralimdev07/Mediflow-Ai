@@ -76,15 +76,15 @@ const STEP_LABELS = [
 // ── Field component ──────────────────────────────────────────
 const Field = ({ label, error, children, required, hint }) => (
   <div className="space-y-1.5">
-    <label className="flex items-center gap-1 text-xs font-semibold text-slate-300 uppercase tracking-wider">
+    <label className="flex items-center gap-1 text-[11px] font-extrabold text-[#1E293B] uppercase tracking-wider">
       {label}
-      {required && <span className="text-red-400">*</span>}
+      {required && <span className="text-rose-500">*</span>}
     </label>
     {children}
-    {hint && !error && <p className="text-xs text-slate-500">{hint}</p>}
+    {hint && !error && <p className="text-[11px] text-slate-400">{hint}</p>}
     {error && (
-      <p className="flex items-center gap-1 text-xs text-red-400 animate-fade-in">
-        <AlertCircle className="w-3 h-3 flex-shrink-0" />{error}
+      <p className="flex items-center gap-1 text-xs text-rose-500 animate-fade-in font-semibold">
+        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />{error}
       </p>
     )}
   </div>
@@ -93,33 +93,37 @@ const Field = ({ label, error, children, required, hint }) => (
 // ── Step 1: Patient Details ──────────────────────────────────
 const Step1 = ({ data, onChange, errors }) => (
   <div className="space-y-5">
-    <div className="flex items-center gap-3 mb-6">
-      <div className="p-3 rounded-xl bg-primary/20 border border-primary/30">
-        <User className="w-6 h-6 text-primary-light" />
+    <div className="flex items-center gap-3.5 mb-5 pb-3 border-b border-slate-100">
+      <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#5046E5] flex items-center justify-center shrink-0 shadow-sm">
+        <User className="w-6 h-6 stroke-[2]" />
       </div>
       <div>
-        <h3 className="text-lg font-bold text-slate-100">Patient Details</h3>
-        <p className="text-sm text-slate-400">Basic information about the patient</p>
+        <h3 className="text-lg font-black text-[#1E293B]">Patient Details</h3>
+        <p className="text-xs text-slate-400 font-medium">Basic information about the patient</p>
       </div>
     </div>
 
     <Field label="Full Name" required error={errors.fullName}>
       <input
         id="bw-full-name"
-        className={`input ${errors.fullName ? 'border-red-500/60 focus:border-red-500' : ''}`}
-        placeholder="e.g. Arjun Sharma"
+        className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+          errors.fullName ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+        } text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all`}
+        placeholder="e.g. Sakthi Sundar"
         value={data.fullName}
         onChange={e => onChange('fullName', e.target.value)}
       />
     </Field>
 
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Field label="Age" required error={errors.age}>
         <input
           id="bw-age"
           type="number"
           min="0" max="120"
-          className={`input ${errors.age ? 'border-red-500/60' : ''}`}
+          className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+            errors.age ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+          } text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all`}
           placeholder="e.g. 28"
           value={data.age}
           onChange={e => onChange('age', e.target.value)}
@@ -129,7 +133,9 @@ const Step1 = ({ data, onChange, errors }) => (
       <Field label="Gender" required error={errors.gender}>
         <select
           id="bw-gender"
-          className={`input ${errors.gender ? 'border-red-500/60' : ''}`}
+          className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+            errors.gender ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+          } text-xs font-bold text-[#1E293B] focus:bg-white focus:outline-none transition-all cursor-pointer`}
           value={data.gender}
           onChange={e => onChange('gender', e.target.value)}
         >
@@ -139,33 +145,37 @@ const Step1 = ({ data, onChange, errors }) => (
       </Field>
     </div>
 
-    <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-      <div className="flex items-start gap-2.5">
-        <Shield className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-        <p className="text-xs text-blue-300">Your personal data is encrypted and stored securely. We comply with all healthcare data protection regulations.</p>
+    <div className="p-4 rounded-2xl bg-[#EEF2FF]/60 border border-indigo-100">
+      <div className="flex items-start gap-3">
+        <Shield className="w-4 h-4 text-[#5046E5] mt-0.5 flex-shrink-0" />
+        <p className="text-xs text-slate-600 leading-relaxed font-medium">
+          Your personal data is encrypted and stored securely. We comply with all healthcare data protection regulations.
+        </p>
       </div>
     </div>
   </div>
 );
 
 // ── Step 2: Symptoms ─────────────────────────────────────────
-const Step2 = ({ data, onChange, errors }) => (
+const Step2 = ({ data, onChange, errors, aiPrediction, aiLoading }) => (
   <div className="space-y-5">
-    <div className="flex items-center gap-3 mb-6">
-      <div className="p-3 rounded-xl bg-orange-500/20 border border-orange-500/30">
-        <Activity className="w-6 h-6 text-orange-400" />
+    <div className="flex items-center gap-3.5 mb-5 pb-3 border-b border-slate-100">
+      <div className="w-12 h-12 rounded-2xl bg-[#FAF5FF] text-[#9333EA] flex items-center justify-center shrink-0 shadow-sm">
+        <Activity className="w-6 h-6 stroke-[2]" />
       </div>
       <div>
-        <h3 className="text-lg font-bold text-slate-100">Symptom Details</h3>
-        <p className="text-sm text-slate-400">Help our AI analyze your condition accurately</p>
+        <h3 className="text-lg font-black text-[#1E293B]">Symptom Details</h3>
+        <p className="text-xs text-slate-400 font-medium">Help our AI analyze your condition accurately</p>
       </div>
     </div>
 
     <Field label="Chief Complaint" required error={errors.chiefComplaint} hint="Your primary symptom or reason for visit">
       <input
         id="bw-chief-complaint"
-        className={`input ${errors.chiefComplaint ? 'border-red-500/60' : ''}`}
-        placeholder="e.g. Severe chest pain, High fever, Back pain"
+        className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+          errors.chiefComplaint ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+        } text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all`}
+        placeholder="e.g. high back pain, chest tightness, severe migraine"
         value={data.chiefComplaint}
         onChange={e => onChange('chiefComplaint', e.target.value)}
       />
@@ -175,14 +185,17 @@ const Step2 = ({ data, onChange, errors }) => (
       hint={`Describe onset, triggers, and any medications taken. (${data.symptomsDescription?.length || 0}/20 min chars)`}>
       <textarea
         id="bw-symptoms-desc"
-        className={`input min-h-[110px] resize-y ${errors.symptomsDescription ? 'border-red-500/60' : ''}`}
+        rows="3"
+        className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+          errors.symptomsDescription ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+        } text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all resize-none`}
         placeholder="When did it start? How severe? Any existing conditions, allergies, or medications you take..."
         value={data.symptomsDescription}
         onChange={e => onChange('symptomsDescription', e.target.value)}
       />
     </Field>
 
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Field label="Severity Level" hint="1 = Mild, 10 = Severe">
         <div className="grid grid-cols-5 gap-1.5">
           {SEVERITIES.map(n => (
@@ -190,12 +203,10 @@ const Step2 = ({ data, onChange, errors }) => (
               key={n} type="button"
               id={`bw-severity-${n}`}
               onClick={() => onChange('severityLevel', n)}
-              className={`py-2 rounded-lg text-sm font-bold border transition-all ${
+              className={`py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
                 data.severityLevel === n
-                  ? n <= 3 ? 'bg-green-500/30 border-green-500 text-green-300'
-                  : n <= 6 ? 'bg-yellow-500/30 border-yellow-500 text-yellow-300'
-                  : 'bg-red-500/30 border-red-500 text-red-300'
-                  : 'bg-surface/40 border-surface-border/30 text-slate-400 hover:border-slate-500'
+                  ? 'bg-[#5046E5] text-white shadow-md shadow-indigo-500/25'
+                  : 'bg-[#F8FAFC] border border-slate-200/80 text-slate-600 hover:bg-slate-100'
               }`}
             >{n}</button>
           ))}
@@ -205,7 +216,7 @@ const Step2 = ({ data, onChange, errors }) => (
       <Field label="Duration">
         <select
           id="bw-duration"
-          className="input"
+          className="w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 focus:border-[#5046E5] text-xs font-bold text-[#1E293B] focus:bg-white focus:outline-none transition-all cursor-pointer"
           value={data.symptomDuration}
           onChange={e => onChange('symptomDuration', e.target.value)}
         >
@@ -220,15 +231,60 @@ const Step2 = ({ data, onChange, errors }) => (
       </Field>
     </div>
 
-    <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
-      <div className="flex items-start gap-2.5">
-        <Sparkles className="w-4 h-4 text-primary-light mt-0.5 flex-shrink-0" />
-        <div className="text-xs text-slate-300 space-y-1">
-          <p className="font-semibold text-slate-100">AI Triage & Doctor Matching</p>
-          <p>Your symptoms are analyzed by our XGBoost AI model (P1-P5 urgency scale) to route you to the right specialist instantly.</p>
+    {/* Real-time ML Prediction Card */}
+    {aiLoading ? (
+      <div className="p-4 rounded-2xl bg-[#EEF2FF] border border-indigo-100 flex items-center gap-3 animate-pulse">
+        <span className="w-5 h-5 border-2 border-[#5046E5] border-t-transparent rounded-full animate-spin shrink-0" />
+        <p className="text-xs text-[#5046E5] font-bold">Running ML Disease & Priority Classifier...</p>
+      </div>
+    ) : aiPrediction ? (
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#EEF2FF] to-white border border-indigo-100 shadow-sm space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-[#5046E5] text-white flex items-center justify-center shadow-md shadow-indigo-500/20">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#5046E5]">
+                AI Detected Disease & Severity
+              </span>
+              <h4 className="text-sm font-black text-[#1E293B]">{aiPrediction.predicted_disease}</h4>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-[#FFFBEB] text-[#D97706] border border-amber-200">
+              {aiPrediction.priority} ({aiPrediction.triage_level})
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs pt-1">
+          <div className="p-2.5 bg-white rounded-xl shadow-xs border border-slate-100">
+            <span className="text-[10px] font-bold text-slate-400 uppercase block">Specialist</span>
+            <span className="font-extrabold text-[#1E293B] truncate block">{aiPrediction.department_name}</span>
+          </div>
+          <div className="p-2.5 bg-white rounded-xl shadow-xs border border-slate-100">
+            <span className="text-[10px] font-bold text-slate-400 uppercase block">Age Category</span>
+            <span className="font-extrabold text-[#1E293B]">{aiPrediction.age_category}</span>
+          </div>
+          <div className="p-2.5 bg-white rounded-xl shadow-xs border border-slate-100">
+            <span className="text-[10px] font-bold text-slate-400 uppercase block">ML Confidence</span>
+            <span className="font-extrabold text-[#05CD99]">{Math.round(aiPrediction.confidence * 100)}%</span>
+          </div>
         </div>
       </div>
-    </div>
+    ) : (
+      <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+        <div className="flex items-start gap-2.5">
+          <Sparkles className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+          <div className="text-xs text-slate-500 space-y-1">
+            <p className="font-semibold text-slate-700">AI Triage & Doctor Matching</p>
+            <p>Enter your chief complaint and symptoms. Our ML model will automatically analyze disease likelihood and assign the right specialist.</p>
+          </div>
+        </div>
+      </div>
+    )}
   </div>
 );
 
@@ -241,48 +297,52 @@ const Step3 = ({ data, onChange, errors, departments }) => {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 rounded-xl bg-teal-500/20 border border-teal-500/30">
-          <Phone className="w-6 h-6 text-teal-400" />
+      <div className="flex items-center gap-3.5 mb-5 pb-3 border-b border-slate-100">
+        <div className="w-12 h-12 rounded-2xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center shrink-0 shadow-sm">
+          <Calendar className="w-6 h-6 stroke-[2]" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-slate-100">Contact & Schedule</h3>
-          <p className="text-sm text-slate-400">How to reach you and when you'd like to visit</p>
+          <h3 className="text-lg font-black text-[#1E293B]">Contact & Schedule</h3>
+          <p className="text-xs text-slate-400 font-medium">How to reach you and when you'd like to visit</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Phone Number" required error={errors.phone} hint="10-digit mobile or international">
           <input
             id="bw-phone"
             type="tel"
-            className={`input ${errors.phone ? 'border-red-500/60' : ''}`}
-            placeholder="e.g. 9876543210"
+            className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+              errors.phone ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+            } text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all`}
+            placeholder="+91 98765 43210"
             value={data.phone}
             onChange={e => onChange('phone', e.target.value)}
           />
         </Field>
 
-        <Field label="Email Address" error={errors.email} hint="Optional — for bill delivery">
+        <Field label="Email Address" hint="For confirmation & PDF receipt">
           <input
             id="bw-email"
             type="email"
-            className={`input ${errors.email ? 'border-red-500/60' : ''}`}
-            placeholder="you@example.com"
+            className="w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 focus:border-[#5046E5] text-xs font-bold text-[#1E293B] placeholder-slate-400 focus:bg-white focus:outline-none transition-all"
+            placeholder="patient@mediflow.ai"
             value={data.email}
             onChange={e => onChange('email', e.target.value)}
           />
         </Field>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Preferred Date" required error={errors.preferredDate}>
           <input
-            id="bw-preferred-date"
+            id="bw-date"
             type="date"
             min={today}
             max={maxDateStr}
-            className={`input ${errors.preferredDate ? 'border-red-500/60' : ''}`}
+            className={`w-full px-4 py-3 rounded-2xl bg-[#F8FAFC] border ${
+              errors.preferredDate ? 'border-rose-400' : 'border-slate-200/80 focus:border-[#5046E5]'
+            } text-xs font-bold text-[#1E293B] focus:bg-white focus:outline-none transition-all cursor-pointer`}
             value={data.preferredDate}
             onChange={e => onChange('preferredDate', e.target.value)}
           />
@@ -319,13 +379,14 @@ const Step3 = ({ data, onChange, errors, departments }) => {
 };
 
 // ── Step 4: Review & Confirm ─────────────────────────────────
-const Step4 = ({ data, bookingResult, loading, onBook, onProceedToPayment, departments }) => {
+const Step4 = ({ data, bookingResult, loading, onBook, onProceedToPayment, departments, aiPrediction }) => {
   const dept = departments.find(d => d.id === data.preferredDepartmentId);
 
   const reviewRows = [
     { label: 'Full Name', value: data.fullName },
     { label: 'Age / Gender', value: `${data.age} yrs • ${data.gender}` },
     { label: 'Chief Complaint', value: data.chiefComplaint },
+    aiPrediction && { label: 'AI Diagnosis', value: `${aiPrediction.predicted_disease} (${aiPrediction.priority} priority)` },
     { label: 'Symptoms', value: data.symptomsDescription?.slice(0, 100) + (data.symptomsDescription?.length > 100 ? '...' : '') },
     data.severityLevel && { label: 'Severity', value: `${data.severityLevel}/10` },
     data.symptomDuration && { label: 'Duration', value: data.symptomDuration },
@@ -333,36 +394,45 @@ const Step4 = ({ data, bookingResult, loading, onBook, onProceedToPayment, depar
     data.email && { label: 'Email', value: data.email },
     { label: 'Preferred Date', value: data.preferredDate },
     { label: 'Time Slot', value: data.preferredTimeSlot },
-    dept && { label: 'Department', value: dept.name },
+    (dept || aiPrediction) && { label: 'Department', value: dept?.name || aiPrediction?.department_name },
   ].filter(Boolean);
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 rounded-xl bg-violet-500/20 border border-violet-500/30">
-          <FileText className="w-6 h-6 text-violet-400" />
+      <div className="flex items-center gap-3.5 mb-5 pb-3 border-b border-slate-100">
+        <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#5046E5] flex items-center justify-center shrink-0 shadow-sm">
+          <FileText className="w-6 h-6 stroke-[2]" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-slate-100">Review & Confirm</h3>
-          <p className="text-sm text-slate-400">Verify your details before storing the booking</p>
+          <h3 className="text-lg font-black text-[#1E293B]">Review & Confirm</h3>
+          <p className="text-xs text-slate-400 font-medium">Verify your details before storing the booking</p>
         </div>
       </div>
 
       {!bookingResult ? (
         <>
-          <div className="rounded-xl border border-surface-border/40 overflow-hidden">
+          <div className="rounded-2xl border border-slate-200/80 overflow-hidden divide-y divide-slate-100 bg-white">
             {reviewRows.map((row, i) => (
-              <div key={i} className={`flex items-start gap-3 px-4 py-3 ${i % 2 === 0 ? 'bg-surface/30' : 'bg-surface/10'}`}>
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider w-32 flex-shrink-0 pt-0.5">{row.label}</span>
-                <span className="text-sm text-slate-100 break-words">{row.value}</span>
+              <div key={i} className="flex items-start gap-3 px-4 py-3 bg-white hover:bg-slate-50/50 transition-colors">
+                <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider w-32 flex-shrink-0 pt-0.5">{row.label}</span>
+                <span className="text-xs font-bold text-[#1E293B] break-words">{row.value}</span>
               </div>
             ))}
           </div>
 
-          <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+          {aiPrediction && (
+            <div className="p-4 rounded-2xl bg-[#EEF2FF] border border-indigo-100 flex items-start gap-2.5">
+              <Sparkles className="w-4 h-4 text-[#5046E5] mt-0.5 flex-shrink-0" />
+              <div className="text-xs text-slate-700">
+                <span className="font-bold text-[#5046E5]">AI Matched Diagnosis:</span> {aiPrediction.predicted_disease} — {aiPrediction.ai_summary}
+              </div>
+            </div>
+          )}
+
+          <div className="p-4 rounded-2xl bg-[#FFFBEB] border border-amber-200">
             <div className="flex items-start gap-2.5">
-              <AlertCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-amber-300">Clicking "Store & Generate Booking" will securely save your information and generate a unique Booking Reference ID. Payment is the next step.</p>
+              <AlertCircle className="w-4 h-4 text-[#D97706] mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-amber-900 font-medium">Clicking "Store & Generate Booking" will securely save your information and generate a unique Booking Reference ID. Payment is the next step.</p>
             </div>
           </div>
 
@@ -370,7 +440,7 @@ const Step4 = ({ data, bookingResult, loading, onBook, onProceedToPayment, depar
             id="bw-confirm-booking-btn"
             disabled={loading}
             onClick={onBook}
-            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-primary to-primary-light text-white font-bold text-sm shadow-lg hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-extrabold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer disabled:opacity-50"
           >
             {loading ? (
               <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Processing...</>
@@ -381,64 +451,55 @@ const Step4 = ({ data, bookingResult, loading, onBook, onProceedToPayment, depar
         </>
       ) : (
         <div className="space-y-4">
-          <div className="p-5 rounded-xl bg-green-500/10 border border-green-500/30 text-center">
+          <div className="p-5 rounded-2xl bg-[#E6FAF5] border border-emerald-200 text-center">
             <div className="flex justify-center mb-3">
-              <div className="p-3 rounded-full bg-green-500/20">
-                <CheckCircle2 className="w-8 h-8 text-green-400" />
+              <div className="p-3 rounded-full bg-emerald-100 text-[#05CD99]">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
             </div>
-            <h4 className="text-lg font-bold text-green-300 mb-1">Booking Stored Successfully!</h4>
-            <p className="text-sm text-slate-400">Your booking reference ID has been generated</p>
+            <h4 className="text-lg font-black text-[#1E293B] mb-1">Booking Stored Successfully!</h4>
+            <p className="text-xs text-slate-500">Your booking reference ID has been generated</p>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="p-4 rounded-xl bg-surface/40 border border-surface-border/30 text-center">
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Booking Reference</p>
-              <p className="font-mono font-bold text-primary-light text-sm">{bookingResult.booking_reference}</p>
+            <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference</p>
+              <p className="font-mono font-black text-[#5046E5] text-sm">{bookingResult.booking_reference}</p>
             </div>
-            <div className="p-4 rounded-xl bg-surface/40 border border-surface-border/30 text-center">
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Queue Position</p>
-              <p className="text-2xl font-black text-slate-100">#{bookingResult.queue_position}</p>
+            <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Queue Position</p>
+              <p className="text-2xl font-black text-[#1E293B]">#{bookingResult.queue_position}</p>
             </div>
-            <div className="p-4 rounded-xl bg-surface/40 border border-surface-border/30 text-center">
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Est. Wait</p>
-              <p className="text-xl font-black text-amber-400">~{bookingResult.estimated_wait_minutes} min</p>
+            <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Est. Wait</p>
+              <p className="text-xl font-black text-[#FFB547]">~{bookingResult.estimated_wait_minutes} min</p>
             </div>
-            <div className="p-4 rounded-xl bg-surface/40 border border-surface-border/30 text-center">
-              <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Consultation Fee</p>
-              <p className="text-xl font-black text-teal-400">₹{bookingResult.consultation_fee?.toFixed(0) || bookingResult.net_amount?.toFixed(0)}</p>
+            <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Consultation Fee</p>
+              <p className="text-xl font-black text-[#05CD99]">₹{bookingResult.consultation_fee?.toFixed(0) || bookingResult.net_amount?.toFixed(0)}</p>
             </div>
           </div>
 
           {bookingResult.matched_doctor && (
-            <div className="p-4 rounded-xl bg-slate-800/50 border border-slate-700 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center">
-                <Stethoscope className="w-5 h-5 text-primary-light" />
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#EEF2FF] text-[#5046E5] flex items-center justify-center">
+                <Stethoscope className="w-5 h-5" />
               </div>
               <div>
-                <p className="font-bold text-slate-100 text-sm">{bookingResult.matched_doctor.doctor_name}</p>
-                <p className="text-xs text-primary-light">{bookingResult.matched_doctor.match_reason || 'AI Matched Specialist'}</p>
+                <p className="font-bold text-[#1E293B] text-xs">{bookingResult.matched_doctor.doctor_name}</p>
+                <p className="text-[10px] text-slate-400">{bookingResult.matched_doctor.match_reason || 'AI Matched Specialist'}</p>
               </div>
-              <div className="ml-auto flex items-center gap-1 text-yellow-400">
+              <div className="ml-auto flex items-center gap-1 text-amber-500">
                 <Star className="w-3.5 h-3.5 fill-current" />
                 <span className="text-xs font-bold">{bookingResult.matched_doctor.score?.toFixed(1) || '4.8'}</span>
               </div>
             </div>
           )}
 
-          {bookingResult.ai_suggestion && (
-            <div className="p-4 rounded-xl bg-primary/10 border border-primary/20">
-              <p className="text-xs font-bold text-primary-light mb-1">
-                AI Triage: {bookingResult.ai_suggestion.predicted_level}
-              </p>
-              <p className="text-xs text-slate-300">{bookingResult.ai_suggestion.recommendation}</p>
-            </div>
-          )}
-
           <button
             id="bw-proceed-payment-btn"
             onClick={onProceedToPayment}
-            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-sm shadow-xl transition-all mt-4"
+            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-extrabold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer mt-4"
           >
             <CreditCard className="w-4 h-4" />
             Proceed to Payment & Receipt (Step 5)
@@ -596,102 +657,70 @@ const Step5 = ({ bookingResult, data, onClose }) => {
       <div className="space-y-5" ref={printRef}>
         {/* Confirmation Header */}
         <div className="text-center py-4">
-          <div className="flex justify-center mb-4">
-            <div className="relative">
-              <div className="absolute inset-0 animate-ping rounded-full bg-green-400/20" />
-              <div className="relative p-4 rounded-full bg-green-500/20 border border-green-500/30">
-                <CheckCircle2 className="w-12 h-12 text-green-400" />
-              </div>
+          <div className="flex justify-center mb-3">
+            <div className="p-3.5 rounded-full bg-[#E6FAF5] text-[#05CD99]">
+              <CheckCircle2 className="w-10 h-10" />
             </div>
           </div>
-          <h3 className="text-2xl font-black text-green-300 mb-1">Your booking is confirmed!</h3>
-          <p className="text-sm text-slate-400">Payment received • Appointment scheduled</p>
+          <h3 className="text-xl font-black text-[#1E293B] mb-1">Your booking is confirmed!</h3>
+          <p className="text-xs text-slate-400 font-medium">Payment received • Appointment scheduled</p>
         </div>
 
-        {/* Reference Box */}
-        <div className="p-4 rounded-xl bg-primary/10 border border-primary/30 text-center">
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Booking Reference ID</p>
-          <p className="font-mono text-xl font-black text-primary-light">{bookingResult.booking_reference}</p>
-        </div>
-
-        {/* Appointment Details */}
+        {/* Reference and Token Box */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-3 rounded-xl bg-surface/40 border border-surface-border/30">
-            <div className="flex items-center gap-2 mb-1">
-              <Calendar className="w-4 h-4 text-teal-400" />
-              <span className="text-xs font-semibold text-slate-400 uppercase">Date</span>
-            </div>
-            <p className="font-bold text-slate-100 text-sm">{data.preferredDate}</p>
+          <div className="p-4 rounded-2xl bg-[#EEF2FF] border border-indigo-100 text-center">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Booking Reference</p>
+            <p className="font-mono text-sm font-black text-[#5046E5]">{bookingResult.booking_reference}</p>
           </div>
-          <div className="p-3 rounded-xl bg-surface/40 border border-surface-border/30">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="w-4 h-4 text-teal-400" />
-              <span className="text-xs font-semibold text-slate-400 uppercase">Time</span>
-            </div>
-            <p className="font-bold text-slate-100 text-sm">{data.preferredTimeSlot}</p>
-          </div>
-          <div className="p-3 rounded-xl bg-surface/40 border border-surface-border/30">
-            <div className="flex items-center gap-2 mb-1">
-              <Users className="w-4 h-4 text-amber-400" />
-              <span className="text-xs font-semibold text-slate-400 uppercase">Queue</span>
-            </div>
-            <p className="font-bold text-amber-300 text-sm">Position #{bookingResult.queue_position}</p>
-          </div>
-          <div className="p-3 rounded-xl bg-surface/40 border border-surface-border/30">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="w-4 h-4 text-orange-400" />
-              <span className="text-xs font-semibold text-slate-400 uppercase">Est. Wait</span>
-            </div>
-            <p className="font-bold text-orange-300 text-sm">~{bookingResult.estimated_wait_minutes} min</p>
+          <div className="p-4 rounded-2xl bg-[#FFFBEB] border border-amber-200 text-center">
+            <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider mb-1">Your Unique Token</p>
+            <p className="font-mono text-2xl font-black text-[#D97706] tracking-wider">
+              {bookingResult.token || `A-${String(bookingResult.queue_position || 1).padStart(3, '0')}`}
+            </p>
           </div>
         </div>
 
         {/* Itemized Bill */}
-        <div className="rounded-xl border border-surface-border/40 overflow-hidden">
-          <div className="px-4 py-3 bg-surface/50 border-b border-surface-border/30">
-            <h4 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-              <FileText className="w-4 h-4 text-primary-light" /> Payment Receipt
+        <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+          <div className="px-4 py-3 bg-[#F8FAFC] border-b border-slate-100 flex items-center justify-between">
+            <h4 className="text-xs font-black text-[#1E293B] flex items-center gap-2">
+              <FileText className="w-4 h-4 text-[#5046E5]" /> Generated Hospital Bill
             </h4>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#E6FAF5] text-[#05CD99] uppercase">
+              PAID VIA RAZORPAY
+            </span>
           </div>
-          <div className="divide-y divide-surface-border/20">
-            <div className="flex justify-between px-4 py-2.5 text-sm">
-              <span className="text-slate-300">Invoice No.</span>
-              <span className="font-mono text-xs text-primary-light font-bold">{bookingResult.invoice_number}</span>
+          <div className="divide-y divide-slate-100 text-xs">
+            <div className="flex justify-between px-4 py-2.5">
+              <span className="text-slate-500 font-medium">Consultation Fee</span>
+              <span className="text-[#1E293B] font-bold">₹{bookingResult.consultation_fee?.toFixed(2) || bookingResult.amount?.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between px-4 py-2.5 text-sm">
-              <span className="text-slate-300">Payment ID</span>
-              <span className="font-mono text-xs text-slate-400">{paymentData?.razorpay_payment_id || paymentData?.id || '—'}</span>
+            <div className="flex justify-between px-4 py-2.5">
+              <span className="text-slate-500 font-medium">GST (18%)</span>
+              <span className="text-[#1E293B] font-bold">₹{bookingResult.tax_amount?.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between px-4 py-2.5 text-sm">
-              <span className="text-slate-300">Consultation Fee</span>
-              <span className="text-slate-100">₹{bookingResult.consultation_fee?.toFixed(2) || bookingResult.amount?.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between px-4 py-2.5 text-sm">
-              <span className="text-slate-300">GST (18%)</span>
-              <span className="text-slate-100">₹{bookingResult.tax_amount?.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between px-4 py-3 text-base font-black bg-teal-500/10">
-              <span className="text-teal-300">Total Paid</span>
-              <span className="text-teal-300">₹{bookingResult.net_amount?.toFixed(2)}</span>
+            <div className="flex justify-between px-4 py-3 text-sm font-black bg-[#F8FAFC]">
+              <span className="text-[#5046E5]">Total Paid</span>
+              <span className="text-[#5046E5]">₹{bookingResult.net_amount?.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <button
             id="bw-download-bill-btn"
             onClick={handleDownloadBill}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-surface-border/50 text-slate-300 hover:bg-surface-hover hover:text-slate-100 transition-all text-sm font-semibold"
+            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition-all cursor-pointer"
           >
-            <Download className="w-4 h-4" /> Download Bill
+            <Download className="w-4 h-4" /> Download Bill Receipt
           </button>
           <button
             id="bw-done-btn"
             onClick={onClose}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-teal-600 to-primary text-white font-bold text-sm shadow-lg hover:opacity-90 transition-all"
+            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-extrabold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
           >
-            <Check className="w-4 h-4" /> Done
+            <Check className="w-4 h-4" /> Track Live Queue & Token
           </button>
         </div>
       </div>
@@ -702,53 +731,49 @@ const Step5 = ({ bookingResult, data, onClose }) => {
   const isFailed = paymentStatus === 'failed';
   return (
     <div className="space-y-5">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-3 rounded-xl bg-green-500/20 border border-green-500/30">
-          <CreditCard className="w-6 h-6 text-green-400" />
+      <div className="flex items-center gap-3.5 mb-5 pb-3 border-b border-slate-100">
+        <div className="w-12 h-12 rounded-2xl bg-[#E6FAF5] text-[#05CD99] flex items-center justify-center shrink-0 shadow-sm">
+          <CreditCard className="w-6 h-6 stroke-[2]" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-slate-100">Complete Payment</h3>
-          <p className="text-sm text-slate-400">Secure payment via Razorpay</p>
+          <h3 className="text-lg font-black text-[#1E293B]">Complete Payment</h3>
+          <p className="text-xs text-slate-400 font-medium">Secure payment via Razorpay</p>
         </div>
       </div>
 
       {isFailed && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+        <div className="p-4 rounded-2xl bg-[#FEF2F2] border border-rose-200">
           <div className="flex items-start gap-2.5">
-            <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+            <AlertCircle className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-sm font-bold text-red-300 mb-1">Payment Failed</p>
-              <p className="text-xs text-red-400">Your payment was not processed. Please try again. Your booking reference is saved — you won't lose your spot.</p>
+              <p className="text-xs font-bold text-rose-700 mb-0.5">Payment Failed</p>
+              <p className="text-xs text-rose-600">Your payment was not processed. Please try again. Your booking reference is saved.</p>
             </div>
           </div>
         </div>
       )}
 
       {/* Booking summary */}
-      <div className="rounded-xl border border-primary/20 bg-primary/5 overflow-hidden">
-        <div className="px-4 py-3 border-b border-primary/20 bg-primary/10">
-          <p className="text-xs font-bold text-primary-light uppercase tracking-wider">Booking Summary</p>
+      <div className="rounded-2xl border border-slate-200/80 overflow-hidden bg-white">
+        <div className="px-4 py-3 border-b border-slate-100 bg-[#F8FAFC]">
+          <p className="text-[10px] font-black text-[#5046E5] uppercase tracking-wider">Booking Payment Summary</p>
         </div>
-        <div className="divide-y divide-surface-border/20">
-          <div className="flex justify-between px-4 py-2.5 text-sm">
-            <span className="text-slate-400">Reference</span>
-            <span className="font-mono font-bold text-primary-light text-xs">{bookingResult.booking_reference}</span>
+        <div className="divide-y divide-slate-100 text-xs">
+          <div className="flex justify-between px-4 py-2.5">
+            <span className="text-slate-500 font-medium">Booking Reference</span>
+            <span className="font-mono font-bold text-[#5046E5]">{bookingResult?.booking_reference}</span>
           </div>
-          <div className="flex justify-between px-4 py-2.5 text-sm">
-            <span className="text-slate-400">Invoice No.</span>
-            <span className="font-mono text-xs text-slate-300">{bookingResult.invoice_number}</span>
+          <div className="flex justify-between px-4 py-2.5">
+            <span className="text-slate-500 font-medium">Consultation Fee</span>
+            <span className="text-[#1E293B] font-bold">₹{bookingResult?.consultation_fee?.toFixed(2) || bookingResult?.amount?.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between px-4 py-2.5 text-sm">
-            <span className="text-slate-400">Consultation Fee</span>
-            <span className="text-slate-100">₹{bookingResult.consultation_fee?.toFixed(2) || bookingResult.amount?.toFixed(2)}</span>
+          <div className="flex justify-between px-4 py-2.5">
+            <span className="text-slate-500 font-medium">GST (18%)</span>
+            <span className="text-[#1E293B] font-bold">₹{bookingResult?.tax_amount?.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between px-4 py-2.5 text-sm">
-            <span className="text-slate-400">GST (18%)</span>
-            <span className="text-slate-100">₹{bookingResult.tax_amount?.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between px-4 py-3 font-black text-base">
-            <span className="text-teal-300">Total</span>
-            <span className="text-teal-300">₹{bookingResult.net_amount?.toFixed(2)}</span>
+          <div className="flex justify-between px-4 py-3 font-black text-sm bg-[#F8FAFC]">
+            <span className="text-[#5046E5]">Total Amount</span>
+            <span className="text-[#5046E5]">₹{bookingResult?.net_amount?.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -757,28 +782,18 @@ const Step5 = ({ bookingResult, data, onClose }) => {
         id="bw-pay-btn"
         disabled={paymentStatus === 'processing'}
         onClick={handlePay}
-        className="w-full flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-gradient-to-r from-teal-600 to-primary text-white font-black text-base shadow-xl hover:opacity-90 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-black text-xs shadow-md shadow-indigo-500/20 transition-all disabled:opacity-60 cursor-pointer"
       >
         {paymentStatus === 'processing' ? (
-          <><span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Processing Payment...</>
+          <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Processing Payment...</>
         ) : isFailed ? (
-          <><RotateCcw className="w-5 h-5" />Retry Payment — ₹{bookingResult.net_amount?.toFixed(2)}</>
+          <><RotateCcw className="w-4 h-4" />Retry Payment — ₹{bookingResult?.net_amount?.toFixed(2)}</>
         ) : (
-          <><CreditCard className="w-5 h-5" />Pay ₹{bookingResult.net_amount?.toFixed(2)} via Razorpay</>
+          <><CreditCard className="w-4 h-4" />Pay ₹{bookingResult?.net_amount?.toFixed(2)} via Razorpay</>
         )}
       </button>
 
-      {isFailed && (
-        <button
-          id="bw-pay-later-btn"
-          onClick={onClose}
-          className="w-full py-2.5 px-4 rounded-xl border border-surface-border/40 text-slate-400 hover:text-slate-200 hover:border-slate-500 transition-all text-sm font-semibold"
-        >
-          Pay Later — Your booking is saved
-        </button>
-      )}
-
-      <p className="text-center text-xs text-slate-500">
+      <p className="text-center text-[11px] text-slate-400 font-medium">
         🔒 Payments are encrypted and processed securely by Razorpay
       </p>
     </div>
@@ -786,11 +801,13 @@ const Step5 = ({ bookingResult, data, onClose }) => {
 };
 
 // ── Main BookingWizard Component ─────────────────────────────
-export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
+export const BookingWizard = ({ isOpen, onClose, onSuccess, initialDoctor = null }) => {
   const [step, setStep] = useState(1);
   const [departments, setDepartments] = useState([]);
   const [bookingResult, setBookingResult] = useState(null);
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [aiPrediction, setAiPrediction] = useState(null);
+  const [aiLoading, setAiLoading] = useState(false);
   const { addToast } = useUiStore();
   const { user } = useAuthStore();
 
@@ -807,9 +824,21 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
     preferredDate: '',
     preferredTimeSlot: '',
     preferredDepartmentId: '',
+    preferredDoctorId: '',
   });
 
   const [errors, setErrors] = useState({});
+
+  // Sync initialDoctor when opened
+  useEffect(() => {
+    if (initialDoctor && isOpen) {
+      setFormData(prev => ({
+        ...prev,
+        preferredDoctorId: initialDoctor.id || initialDoctor.user_id || '',
+        preferredDepartmentId: initialDoctor.department_id || prev.preferredDepartmentId,
+      }));
+    }
+  }, [initialDoctor, isOpen]);
 
   // Fetch departments on mount
   useEffect(() => {
@@ -828,9 +857,44 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
     if (!isOpen) {
       setStep(1);
       setBookingResult(null);
+      setAiPrediction(null);
       setErrors({});
     }
   }, [isOpen]);
+
+  // Real-time debounced AI disease and priority prediction (instant 150ms response)
+  useEffect(() => {
+    const complaint = formData.chiefComplaint?.trim();
+    if (!complaint || complaint.length < 2) {
+      setAiPrediction(null);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      setAiLoading(true);
+      try {
+        const res = await api.post('/triage/predict-disease', {
+          chief_complaint: formData.chiefComplaint,
+          symptoms_description: formData.symptomsDescription || '',
+          age: parseInt(formData.age) || 30,
+          severity_level: formData.severityLevel || 5,
+        });
+        const pred = (res.data || res)?.data || res.data || res;
+        setAiPrediction(pred);
+
+        // Auto-select matching department if not manually selected
+        if (pred?.recommended_department_id && !formData.preferredDepartmentId) {
+          setFormData(prev => ({ ...prev, preferredDepartmentId: pred.recommended_department_id }));
+        }
+      } catch (err) {
+        console.error('AI disease prediction error:', err);
+      } finally {
+        setAiLoading(false);
+      }
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [formData.chiefComplaint, formData.symptomsDescription, formData.age, formData.severityLevel]);
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -872,23 +936,24 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
     try {
       const payload = {
         full_name: formData.fullName,
-        age: parseInt(formData.age),
+        age: parseInt(formData.age) || 30,
         gender: formData.gender,
         chief_complaint: formData.chiefComplaint,
         symptoms_description: formData.symptomsDescription,
-        severity_level: formData.severityLevel,
+        severity_level: formData.severityLevel || 5,
         symptom_duration: formData.symptomDuration || null,
         phone: formData.phone,
         email: formData.email || null,
         preferred_date: formData.preferredDate,
         preferred_time_slot: formData.preferredTimeSlot,
         preferred_department_id: formData.preferredDepartmentId || null,
+        preferred_doctor_id: formData.preferredDoctorId || (initialDoctor?.id || null),
       };
 
       const res = await api.post('/appointments/book', payload);
       const result = (res.data || res)?.data || res.data || res;
       setBookingResult(result);
-      addToast({ type: 'success', title: 'Booking Stored!', message: `Reference: ${result.booking_reference}` });
+      addToast({ type: 'success', title: 'Booking Confirmed!', message: `Reference: ${result.booking_reference}` });
     } catch (err) {
       addToast({ type: 'error', title: 'Booking Failed', message: err.message });
     } finally {
@@ -906,47 +971,45 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
   const canGoNext = step < 4 || (step === 4 && !!bookingResult);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
-      <div className="w-full max-w-2xl bg-surface-card border border-surface-border/50 rounded-2xl shadow-2xl flex flex-col max-h-[95vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
+      <div className="w-full max-w-2xl bg-white border border-slate-100 rounded-3xl shadow-2xl flex flex-col max-h-[95vh] overflow-hidden">
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-surface-border/30 flex-shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 flex-shrink-0 bg-white">
           <div>
-            <h2 className="text-xl font-black text-slate-100">Book an Appointment</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Step {step} of 5 — {STEP_LABELS[step - 1].label}</p>
+            <h2 className="text-xl font-black text-[#1E293B]">Book an Appointment</h2>
+            <p className="text-xs text-slate-400 mt-0.5 font-medium">Step {step} of 5 — {STEP_LABELS[step - 1].label}</p>
           </div>
           <button
             id="bw-close-btn"
             onClick={handleClose}
-            className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-surface-hover transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Progress Bar */}
-        <div className="px-6 py-3 border-b border-surface-border/20 flex-shrink-0">
-          <div className="flex items-center gap-1">
+        {/* Progress Bar in Clean Theme */}
+        <div className="px-6 py-3.5 border-b border-slate-100 flex-shrink-0 bg-[#F8FAFC]">
+          <div className="flex items-center gap-1.5">
             {STEP_LABELS.map((s, i) => {
               const StepIcon = s.icon;
               const isComplete = i + 1 < step;
               const isCurrent = i + 1 === step;
               return (
                 <React.Fragment key={i}>
-                  <div className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all ${
-                    isCurrent ? 'bg-primary/20 border border-primary/40' :
-                    isComplete ? 'text-green-400' : 'text-slate-600'
+                  <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all ${
+                    isCurrent ? 'bg-[#EEF2FF] text-[#5046E5] font-extrabold shadow-xs' :
+                    isComplete ? 'text-[#05CD99] font-bold' : 'text-slate-400'
                   }`}>
                     {isComplete
-                      ? <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
-                      : <StepIcon className={`w-3.5 h-3.5 ${isCurrent ? 'text-primary-light' : ''}`} />
+                      ? <CheckCircle2 className="w-4 h-4 text-[#05CD99]" />
+                      : <StepIcon className={`w-4 h-4 ${isCurrent ? 'text-[#5046E5]' : ''}`} />
                     }
-                    <span className={`text-xs font-semibold hidden sm:block ${
-                      isCurrent ? 'text-primary-light' : isComplete ? 'text-green-400' : 'text-slate-600'
-                    }`}>{s.label}</span>
+                    <span className="text-xs hidden sm:block">{s.label}</span>
                   </div>
                   {i < STEP_LABELS.length - 1 && (
-                    <div className={`flex-1 h-0.5 rounded ${i + 1 < step ? 'bg-green-500/40' : 'bg-surface-border/30'}`} />
+                    <div className={`flex-1 h-0.5 rounded-full ${i + 1 < step ? 'bg-[#05CD99]' : 'bg-slate-200'}`} />
                   )}
                 </React.Fragment>
               );
@@ -955,9 +1018,17 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto px-6 py-5">
+        <div className="flex-1 overflow-y-auto px-6 py-5 bg-white">
           {step === 1 && <Step1 data={formData} onChange={handleChange} errors={errors} />}
-          {step === 2 && <Step2 data={formData} onChange={handleChange} errors={errors} />}
+          {step === 2 && (
+            <Step2
+              data={formData}
+              onChange={handleChange}
+              errors={errors}
+              aiPrediction={aiPrediction}
+              aiLoading={aiLoading}
+            />
+          )}
           {step === 3 && <Step3 data={formData} onChange={handleChange} errors={errors} departments={departments} />}
           {step === 4 && (
             <Step4
@@ -967,6 +1038,7 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
               onBook={handleBook}
               onProceedToPayment={() => setStep(5)}
               departments={departments}
+              aiPrediction={aiPrediction}
             />
           )}
           {step === 5 && (
@@ -980,45 +1052,45 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
 
         {/* Footer Navigation — hidden on step 4 (has own button) and step 5 */}
         {step !== 4 && step !== 5 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-surface-border/30 flex-shrink-0">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 flex-shrink-0 bg-white">
             <button
               id="bw-back-btn"
               disabled={step === 1}
               onClick={handleBack}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface-border/40 text-slate-400 hover:text-slate-200 hover:border-slate-500 transition-all text-sm font-semibold disabled:opacity-30 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all text-xs font-bold disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" /> Back
             </button>
 
-            <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="flex items-center gap-1.5">
               {[1,2,3,4,5].map(n => (
-                <div key={n} className={`w-2 h-2 rounded-full transition-all ${n === step ? 'bg-primary-light w-4' : n < step ? 'bg-green-500' : 'bg-surface-border/40'}`} />
+                <div key={n} className={`h-2 rounded-full transition-all ${n === step ? 'bg-[#5046E5] w-6' : n < step ? 'bg-[#05CD99] w-2' : 'bg-slate-200 w-2'}`} />
               ))}
             </div>
 
             <button
               id="bw-next-btn"
               onClick={handleNext}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-primary-light text-white font-bold text-sm shadow-lg hover:opacity-90 transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-extrabold text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
             >
-              {step === 3 ? 'Review' : 'Next'} <ChevronRight className="w-4 h-4" />
+              {step === 3 ? 'Review Details' : 'Next'} <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* Step 4 footer — just back */}
         {step === 4 && !bookingResult && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-surface-border/30 flex-shrink-0">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 flex-shrink-0 bg-white">
             <button
               id="bw-back-btn-step4"
               onClick={handleBack}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-surface-border/40 text-slate-400 hover:text-slate-200 hover:border-slate-500 transition-all text-sm font-semibold"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all text-xs font-bold cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" /> Back
             </button>
-            <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="flex items-center gap-1.5">
               {[1,2,3,4,5].map(n => (
-                <div key={n} className={`w-2 h-2 rounded-full transition-all ${n === step ? 'bg-primary-light w-4' : n < step ? 'bg-green-500' : 'bg-surface-border/40'}`} />
+                <div key={n} className={`h-2 rounded-full transition-all ${n === step ? 'bg-[#5046E5] w-6' : n < step ? 'bg-[#05CD99] w-2' : 'bg-slate-200 w-2'}`} />
               ))}
             </div>
           </div>
@@ -1026,12 +1098,12 @@ export const BookingWizard = ({ isOpen, onClose, onSuccess }) => {
 
         {/* Step 4 — after booking, show Proceed to Payment */}
         {step === 4 && bookingResult && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-surface-border/30 flex-shrink-0">
-            <span className="text-xs text-slate-500 italic">Data stored securely ✓</span>
+          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-100 flex-shrink-0 bg-white">
+            <span className="text-xs text-slate-400 font-medium">Data stored securely ✓</span>
             <button
               id="bw-proceed-payment-btn"
               onClick={() => setStep(5)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-primary text-white font-bold text-sm shadow-lg hover:opacity-90 transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-2xl bg-[#5046E5] hover:bg-[#4338CA] text-white font-black text-xs shadow-md shadow-indigo-500/20 transition-all cursor-pointer"
             >
               <CreditCard className="w-4 h-4" /> Confirm Booking & Pay
             </button>

@@ -1,0 +1,633 @@
+/* ==========================================================================
+   MEDIFLOW AI — REGISTER PAGE STYLES
+   Pixel-perfect match to reference theme design
+   ========================================================================== */
+
+.mf-reg-page {
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at 10% 15%, #e3effd 0%, transparent 40%),
+              radial-gradient(circle at 90% 85%, #d9e9fd 0%, transparent 45%),
+              linear-gradient(135deg, #f0f6ff 0%, #f7faff 100%);
+  display: flex;
+  flex-direction: column;
+  color: #1e293b;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* 1. TOP NAVBAR */
+.mf-reg-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(219, 234, 254, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.mf-reg-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #0f172a;
+}
+
+.mf-reg-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+
+.mf-reg-brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mf-reg-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.mf-reg-link {
+  color: #334155;
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.mf-reg-link:hover {
+  color: #1d4ed8;
+}
+
+.mf-reg-btn-getstarted {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1d4ed8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.25);
+  transition: all 0.25s ease;
+}
+
+.mf-reg-btn-getstarted:hover {
+  background: #1e40af;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(29, 78, 216, 0.35);
+}
+
+/* 2. MAIN REGISTER CONTAINER */
+.mf-reg-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.mf-reg-card {
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px -10px rgba(30, 64, 175, 0.08),
+              0 0 0 1px rgba(219, 234, 254, 0.8);
+  width: 100%;
+  max-width: 1060px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* 3. LEFT COLUMN: Illustration & Value Propositions */
+.mf-reg-left {
+  background: #f0f6ff;
+  border-radius: 22px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.mf-reg-illustration-wrapper {
+  width: 100%;
+  aspect-ratio: 1.1;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #e2eeff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.12);
+}
+
+.mf-reg-illustration-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.mf-reg-card:hover .mf-reg-illustration-img {
+  transform: scale(1.02);
+}
+
+.mf-reg-left-header {
+  margin-bottom: 24px;
+}
+
+.mf-reg-left-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.mf-reg-left-subtitle {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.mf-reg-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.mf-reg-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mf-reg-feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.mf-reg-feature-item:hover .mf-reg-feature-icon {
+  transform: scale(1.08);
+  background: #bfdbfe;
+}
+
+.mf-reg-feature-text h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.mf-reg-feature-text p {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* 4. RIGHT COLUMN: Title, Stepper & Form */
+.mf-reg-right {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px 12px 0;
+  box-sizing: border-box;
+}
+
+.mf-reg-title-box {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.mf-reg-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px 0;
+}
+
+.mf-reg-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Stepper Progress Bar */
+.mf-reg-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding: 0 20px;
+}
+
+.mf-reg-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.mf-reg-step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.mf-reg-step-item.active .mf-reg-step-circle {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.mf-reg-step-item.completed .mf-reg-step-circle {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.mf-reg-step-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mf-reg-step-item.active .mf-reg-step-label {
+  color: #2563eb;
+}
+
+.mf-reg-step-item.completed .mf-reg-step-label {
+  color: #475569;
+}
+
+.mf-reg-step-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 12px 24px 12px;
+  position: relative;
+  top: -10px;
+}
+
+.mf-reg-step-line.active {
+  background: #93c5fd;
+}
+
+/* 5. INNER NESTED FORM CARD */
+.mf-reg-form-card {
+  background: #f8fbff;
+  border: 1px solid #e2edff;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mf-reg-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.mf-reg-section-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mf-reg-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.mf-reg-section-sub {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.mf-reg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mf-reg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mf-reg-field.full-width {
+  grid-column: span 2;
+}
+
+.mf-reg-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.mf-reg-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mf-reg-input-icon {
+  position: absolute;
+  left: 14px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.mf-reg-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 16px 0 42px;
+  background: #ffffff;
+  border: 1px solid #dce7f6;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.mf-reg-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.12);
+  background: #ffffff;
+}
+
+.mf-reg-input::placeholder {
+  color: #94a3b8;
+}
+
+.mf-reg-input.select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+.mf-reg-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.mf-reg-checkbox {
+  width: 17px;
+  height: 17px;
+  border-radius: 4px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+
+.mf-reg-checkbox-label a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.mf-reg-checkbox-label a:hover {
+  text-decoration: underline;
+}
+
+/* 6. ACTION BUTTONS */
+.mf-reg-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.mf-reg-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #dce7f6;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mf-reg-btn-back:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.mf-reg-btn-continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+}
+
+.mf-reg-btn-continue:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+.mf-reg-btn-continue:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 7. OAUTH SECTION */
+.mf-reg-oauth-section {
+  margin-top: 20px;
+}
+
+.mf-reg-oauth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.mf-reg-oauth-divider::before,
+.mf-reg-oauth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mf-reg-oauth-divider span {
+  padding: 0 12px;
+  font-size: 12.5px;
+  color: #94a3b8;
+}
+
+.mf-reg-google-btn {
+  width: 100%;
+  height: 44px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mf-reg-google-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 8. BOTTOM FOOTER */
+.mf-reg-footer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.mf-reg-footer-text {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.mf-reg-login-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.mf-reg-login-link:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 9. RESPONSIVE DESIGN */
+@media (max-width: 960px) {
+  .mf-reg-card {
+    grid-template-columns: 1fr;
+    max-width: 540px;
+    padding: 20px;
+  }
+
+  .mf-reg-left {
+    display: none;
+  }
+
+  .mf-reg-nav-links {
+    display: none;
+  }
+
+  .mf-reg-nav {
+    padding: 16px 24px;
+  }
+
+  .mf-reg-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mf-reg-field.full-width {
+    grid-column: span 1;
+  }
+}

@@ -15,37 +15,48 @@ export const AboutPage = () => {
       {/* 1. NAVBAR HEADER */}
       <header className="mf-ref-nav">
         <Link to="/" className="mf-ref-brand">
-          <div className="mf-ref-logo-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19 10.5H16.83L15.41 4.82C15.22 4.07 14.28 3.96 13.91 4.65L10.3 11.45L9.17 9.19C8.94 8.73 8.35 8.5 7.85 8.7L5 9.84V3H3V21H5V12.33L7.14 11.46L9.12 15.42C9.33 15.84 9.87 16.08 10.32 15.96C10.77 15.84 11.1 15.44 11.14 14.98L12.56 9.3L13.98 12.18C14.17 12.57 14.56 12.82 15 12.82H19V10.5Z"
-                fill="white"
-              />
-            </svg>
-          </div>
+          <img
+            src="/mediflow_logo.svg"
+            alt="MediFlow AI Logo"
+            className="mf-ref-logo-img"
+            style={{ width: '40px', height: '40px' }}
+          />
           <div>
             <div className="mf-ref-brand-title">
-              Medi<span>Flow</span> AI
+              Medi<span>Flow</span> <span style={{ color: '#05CD99', fontSize: '18px', fontWeight: 800 }}>AI</span>
             </div>
-            <div className="mf-ref-brand-sub">AI Powered Queue & Patient Flow</div>
+            <div className="mf-ref-brand-sub">AI POWERED QUEUE &amp; PATIENT FLOW</div>
           </div>
         </Link>
 
         {/* Center Nav Items */}
         <ul className="mf-ref-nav-links">
           <li><Link to="/" className="mf-ref-nav-link">Home</Link></li>
-          <li><Link to="/#how-it-works" className="mf-ref-nav-link">How It Works</Link></li>
-          <li><Link to="/#find-specialist" className="mf-ref-nav-link">Find Specialist</Link></li>
-          <li><Link to="/#services" className="mf-ref-nav-link">Services</Link></li>
           <li><Link to="/about" className="mf-ref-nav-link active">About Us</Link></li>
+          <li><Link to="/#features" className="mf-ref-nav-link">Features</Link></li>
+          <li><Link to="/#how-it-works" className="mf-ref-nav-link">How It Works</Link></li>
+          <li><Link to="/contact" className="mf-ref-nav-link">Contact Us</Link></li>
         </ul>
 
         {/* Right Action Buttons */}
         <div className="mf-ref-nav-actions">
+          <div className="mf-ref-bell" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+          </div>
+          <button
+            className="mf-ref-btn-login"
+            style={{ borderColor: '#05CD99', color: '#05CD99' }}
+            onClick={() => navigate('/nurse/login')}
+          >
+            Nurse Station
+          </button>
           <button className="mf-ref-btn-login" onClick={handleLoginClick}>
             Login
           </button>
-          <button className="mf-ref-btn-register" onClick={handleLoginClick}>
+          <button className="mf-ref-btn-register" onClick={() => navigate('/register')}>
             Register
           </button>
         </div>

@@ -38,7 +38,9 @@ export const useWebSocket = (channels = [], onEvent = null) => {
     wsRef.current = ws;
 
     return () => {
-      ws.close();
+      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        ws.close();
+      }
     };
   }, [user?.id, channels.join(',')]);
 

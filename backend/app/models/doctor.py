@@ -19,6 +19,9 @@ class DoctorProfile(Base):
     rating = Column(Float, default=0.0)
     total_consultations = Column(Integer, default=0)
     is_available = Column(Boolean, default=True)
+    status_label = Column(String(50), default="AVAILABLE")  # AVAILABLE, BUSY, ON BREAK, OFFLINE
+    consultation_room = Column(String(50), default="Room 101")
+    hospital_name = Column(String(255), default="MediFlow Smart Hospital")
     consultation_fee = Column(Float, default=500.0)  # Default fee in INR
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
